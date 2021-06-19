@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { ProductTileComponent } from './product-tile/product-tile.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 
 
@@ -10,7 +11,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
   declarations: [
     NavBarComponent,
     ProductTileComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    DialogComponent
   ],
   imports: [
     CommonModule
@@ -18,7 +20,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
   exports: [
     NavBarComponent,
     ProductTileComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    DialogComponent
   ]
 })
 export class UiModule { }

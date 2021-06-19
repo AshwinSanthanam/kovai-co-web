@@ -1,0 +1,48 @@
+.light-text {
+  font-size: 1.2rem;
+  color: var(--color-light-text);
+}
+
+.login-signup {
+  background-color: #f3f5f7;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .login-signup__side-image {
+    height: 400px;
+  }
+
+  .login-signup__fields {
+    min-height: 400px;
+    background-color: white;
+  }
+
+  .login {
+    max-width: 400px;
+    background-color: rgb(231, 231, 231);
+    padding: 3rem 5rem;
+
+    &__fields {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .signup {
+    max-width: 400px;
+    padding: 2rem 5rem;
+    background-color: white;
+
+    &__social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &__icon {
+        margin-left: 1rem;
+      }
+    }
+  }
+}

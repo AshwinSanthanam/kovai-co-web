@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateUserRequest } from '../api/models/user.model';
 import { UserService } from '../api/user.service';
+import { SpinnerService } from '../ui/spinner/spinner.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,9 @@ export class SignupComponent implements OnInit {
 
   public loginForm: FormGroup;
 
-  constructor(private readonly _userService: UserService) {
+  constructor(
+    private readonly _userService: UserService,
+    private readonly _spinnerService: SpinnerService) {
     this._isPasswordVisible = false;
   }
 
@@ -33,13 +36,17 @@ export class SignupComponent implements OnInit {
     if(this.loginForm.valid) {
       console.log(this.loginForm.value);
       const request = this.generateCreateUserRequest();
+
+      this._spinnerService.runSpinner();
       this._userService.createUser(request).subscribe(genericResponse => {
         this._responseErrorMessage = '';
         console.log(genericResponse);
+        this._spinnerService.stopSpinner();
       }, (errorResponse: HttpErrorResponse) => {
         if(errorResponse.status >= 400 && errorResponse.status < 500) {
           this._responseErrorMessage = errorResponse.error.message;
           this.loginForm.reset();
+          this._spinnerService.stopSpinner();
         }
       });
     }

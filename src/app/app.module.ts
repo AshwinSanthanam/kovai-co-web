@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { UiModule } from './ui/ui.module';
+import { ApiModule } from './api/api.module';
 import { SignupComponent } from './signup/signup.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { MainComponent } from './main/main.component';
@@ -21,7 +22,8 @@ import { ProductBrowseComponent } from './main/product-browse/product-browse.com
   imports: [
     BrowserModule,
     AppRoutingModule,
-    UiModule
+    UiModule,
+    ApiModule
   ],
   providers: [],
   bootstrap: [AppComponent]

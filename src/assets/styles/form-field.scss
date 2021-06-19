@@ -9,7 +9,7 @@
 
   &__label {
     font-size: 1em;
-    padding: 0 0.5em 0.5em 0.5em;
+    padding: 0 0.25em 0.5em 0.25em;
     font-weight: 500;
     color: var(--color-heading);
     display: block;
@@ -18,13 +18,14 @@
   &__input {
     font-size: 1em;
     font-weight: 400;
-    padding: 0 0.5em 0.5em 0.5em;
+    padding: 0 0.25em 0.25em 0.25em;
     outline: none;
     border: none;
     border-bottom: 2px solid var(--color-heading);
     color: var(--color-heading);
     width: 100%;
     transition: border-color 0.3s;
+    background-color: rgba($color: #000000, $alpha: 0);
 
     &:focus {
       border-color: var(--color-accent);
@@ -36,7 +37,7 @@
     font-size: 1.2rem;
     font-weight: 500;
     position: absolute;
-    top: 2.5em;
+    top: 2em;
     right: 0;
     cursor: pointer;
   }

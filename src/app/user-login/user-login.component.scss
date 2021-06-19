@@ -7,15 +7,6 @@
   color: var(--color-light-text);
 }
 
-.side-image {
-  height: 400px;
-}
-
-.fields {
-  min-height: 400px;
-  background-color: white;
-}
-
 .login-signup {
   background-color: #f3f5f7;
   min-width: 100vw;
@@ -23,6 +14,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .login-signup__side-image {
+    height: 400px;
+  }
+
+  .login-signup__fields {
+    min-height: 400px;
+    background-color: white;
+  }
 
   .login {
     max-width: 400px;

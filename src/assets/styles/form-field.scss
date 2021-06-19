@@ -6,7 +6,7 @@
 
   &__label {
     font-size: 1em;
-    padding: 0.5em 0;
+    padding: 0.5em;
     font-weight: 500;
     color: var(--color-heading);
     display: block;
@@ -15,7 +15,7 @@
   &__input {
     font-size: 1em;
     font-weight: 400;
-    padding: 0 0 0.5em 0;
+    padding: 0 0.5em 0.5em 0.5em;
     outline: none;
     border: none;
     border-bottom: 2px solid var(--color-heading);

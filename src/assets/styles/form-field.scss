@@ -41,4 +41,33 @@
     right: 0;
     cursor: pointer;
   }
+
+  &__error {
+    font-size: 1.2rem;
+    color: red;
+    margin: 0.25em 0 0 0;
+    animation-name: fade-in;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+  }
+}
+
+.error-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: red;
+  margin: 0.25em 0 0 0;
+  animation-name: fade-in;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

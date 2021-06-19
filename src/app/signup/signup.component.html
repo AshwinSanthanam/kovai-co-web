@@ -11,7 +11,8 @@
                 </fieldset>
                 <fieldset class="form-field">
                   <label class="form-field__label">Password</label>
-                  <input formControlName="password" class="form-field__input" type="{{ isPasswordVisible ? 'text' : 'password'}}">
+                  <input *ngIf="!isPasswordVisible" formControlName="password" class="form-field__input" type="password">
+                  <input *ngIf="isPasswordVisible" formControlName="password" class="form-field__input" type="text">
                   <span (click)="togglePasswordVisibility()" class="form-field__action">{{ isPasswordVisible ? 'Hide' : 'Show' }}</span>
                   <p *ngIf="validate('password', 'required')" class="form-field__error">Password is Required.</p>
                   <p *ngIf="validate('password', 'minlength')" class="form-field__error">Password must contain atleast 8 characters.</p>
@@ -31,3 +32,15 @@
         </div>
     </div>
 </div>
+
+
+
+<app-dialog [popup-command]="confirmSignup">
+    <article class="confirmation">
+        <h2 class="confirmation__title">Sign Up is Successful</h2>
+        <p class="confirmation__description">Your registration has been completed successfully.</p>
+        <section class="confirmation__actions">
+            <button (click)="closeConfirmPopup()" class="button button--accent">OK</button>
+        </section>
+    </article>
+</app-dialog>

@@ -1,8 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CreateUserRequest } from '../api/models/user.model';
 import { UserService } from '../api/user.service';
+import { Publisher } from '../helpers/publisher';
 import { SpinnerService } from '../ui/spinner/spinner.service';
 
 @Component({
@@ -14,13 +16,17 @@ export class SignupComponent implements OnInit {
 
   private _isPasswordVisible: boolean;
   private _responseErrorMessage: string;
+  
+  private readonly _confirmSignup: Publisher<boolean>;
 
   public loginForm: FormGroup;
 
   constructor(
     private readonly _userService: UserService,
-    private readonly _spinnerService: SpinnerService) {
+    private readonly _spinnerService: SpinnerService,
+    private readonly _router: Router) {
     this._isPasswordVisible = false;
+    this._confirmSignup = new Publisher<boolean>();
   }
 
   ngOnInit(): void {
@@ -40,8 +46,9 @@ export class SignupComponent implements OnInit {
       this._spinnerService.runSpinner();
       this._userService.createUser(request).subscribe(genericResponse => {
         this._responseErrorMessage = '';
-        console.log(genericResponse);
+        this.loginForm.reset();
         this._spinnerService.stopSpinner();
+        this._confirmSignup.publish(true);
       }, (errorResponse: HttpErrorResponse) => {
         if(errorResponse.status >= 400 && errorResponse.status < 500) {
           this._responseErrorMessage = errorResponse.error.message;
@@ -68,11 +75,20 @@ export class SignupComponent implements OnInit {
     this._isPasswordVisible = !this._isPasswordVisible;
   }
 
+  public closeConfirmPopup(): void {
+    this._confirmSignup.publish(false);
+    this._router.navigate(['/login']);
+  }
+
   public get isPasswordVisible(): boolean {
     return this._isPasswordVisible;
   }
 
   public get responseErrorMessage(): string {
     return this._responseErrorMessage;
+  }
+
+  public get confirmSignup(): Publisher<boolean> {
+    return this._confirmSignup;
   }
 }

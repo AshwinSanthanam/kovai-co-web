@@ -1,0 +1,30 @@
+.form-field {
+  border: none;
+  display: inline-block;
+  font-size: 1.4rem;
+  width: 100%;
+
+  &__label {
+    font-size: 1em;
+    padding: 0.5em 0;
+    font-weight: 500;
+    color: var(--color-heading);
+    display: block;
+  }
+
+  &__input {
+    font-size: 1em;
+    font-weight: 400;
+    padding: 0 0 0.5em 0;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid var(--color-heading);
+    color: var(--color-heading);
+    width: 100%;
+    transition: border-color 0.3s;
+
+    &:focus {
+      border-color: var(--color-accent);
+    }
+  }
+}

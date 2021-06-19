@@ -8,13 +8,15 @@ import { UiModule } from './ui/ui.module';
 import { SignupComponent } from './signup/signup.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { MainComponent } from './main/main.component';
+import { ProductBrowseComponent } from './main/product-browse/product-browse.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
     UserLoginComponent,
-    MainComponent
+    MainComponent,
+    ProductBrowseComponent
   ],
   imports: [
     BrowserModule,

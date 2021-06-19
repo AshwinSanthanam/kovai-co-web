@@ -1,0 +1,23 @@
+.button {
+  font-size: 1.3rem;
+  font-weight: 500;
+  display: inline-block;
+  color: var(--color-accent);
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 1rem;
+
+  &--block {
+    display: block;
+    width: 100%;
+  }
+
+  &--accent {
+    color: white;
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+}

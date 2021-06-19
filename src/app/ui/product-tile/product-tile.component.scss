@@ -1,0 +1,53 @@
+@import "../../../assets/styles/button.scss";
+
+.product {
+  box-shadow: 0 0 10px lightgray;
+  border-radius: 5px;
+  overflow: hidden;
+  width: max-content;
+  padding-bottom: 1rem;
+  cursor: pointer;
+
+  &__image {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+
+    & img {
+      width: 350px;
+      height: 350px;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+  }
+
+  &__content {
+    margin: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & .product__add {
+      margin-bottom: -0.5rem;
+    }
+  }
+
+  &__text {
+    &__title {
+      font-size: 1.8rem;
+      letter-spacing: 0.09rem;
+      font-weight: bold;
+      margin: 1em 0 0 0;
+    }
+
+    &__slogan {
+      font-size: 1.4rem;
+      font-weight: 300;
+      letter-spacing: 0.06rem;
+    }
+  }
+}
+
+.product:hover .product__image img {
+  transform: scale(1.0625);
+}

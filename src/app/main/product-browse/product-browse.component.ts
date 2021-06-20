@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/api/models/product.model';
 import { Publisher } from 'src/app/helpers/publisher';
 
@@ -15,13 +16,16 @@ export class ProductBrowseComponent implements OnInit {
   public numberOfSelectedTiles: number;
   public confirmDeleteCommand: Publisher<boolean>;
 
-  constructor() {
-    this.adminMode = false;
+  constructor(private readonly _activatedRoute: ActivatedRoute) {
     this.numberOfSelectedTiles = 0;
     this.confirmDeleteCommand = new Publisher<boolean>();
   }
 
   ngOnInit(): void {
+    this._activatedRoute.params.subscribe(params => {
+      this.adminMode = params['admin'] === 'admin';
+    });
+
     const products = [
       { id: 1, name: 'sofa sets', price: 45000, imageUrl: 'https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg' },
       { id: 2, name: 'beds', price: 12500, imageUrl: 'https://images.pexels.com/photos/1374125/pexels-photo-1374125.jpeg' },

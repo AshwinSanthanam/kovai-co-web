@@ -7,7 +7,7 @@ import { StorageService } from '../storage.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UserAuthGuard implements CanActivate {
+export class AdminAuthGuard implements CanActivate {
 
   constructor(
     private readonly _storageService: StorageService,
@@ -18,7 +18,7 @@ export class UserAuthGuard implements CanActivate {
     const isLoggedIn: boolean = this._storageService.token != null && this._storageService.token != '';
     if(isLoggedIn) {
       const role = this._jwtDecoderService.decode(this._storageService.token).role;
-      if(role == 'user') {
+      if(role == 'admin') {
         return true;
       }
     }

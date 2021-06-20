@@ -29,4 +29,9 @@ export class UserService {
     const url = `${this._baseUrl}/authenticate`;
     return this._httpClient.post<GenericResponse<string>>(url, request);
   }
+
+  public authenticateAdmin(request: AuthenticateUserRequest): Observable<GenericResponse<string>> {
+    const url = `${this._baseUrl}/authenticate/admin`;
+    return this._httpClient.post<GenericResponse<string>>(url, request);
+  }
 }

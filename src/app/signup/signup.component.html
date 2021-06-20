@@ -29,6 +29,7 @@
                 <img class="icon signup__social__icon" src="../../assets/svg/login-sprite/facebook.svg" alt="">
                 <img (click)="googleSignIn()" class="icon signup__social__icon" src="../../assets/svg/login-sprite/google.svg" alt="">
             </div>
+            <p *ngIf="responseErrorMessage !== ''" class="error-message">{{responseErrorMessage}}</p>
         </div>
     </div>
 </div>

@@ -12,6 +12,7 @@ import { SignupComponent } from './signup/signup.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { MainComponent } from './main/main.component';
 import { ProductBrowseComponent } from './main/product-browse/product-browse.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -37,9 +38,7 @@ import { ProductBrowseComponent } from './main/product-browse/product-browse.com
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '756422371399-dql4mjnrt5lpapagmv1n8pqvnj3hm4gp.apps.googleusercontent.com'
-            )
+            provider: new GoogleLoginProvider(environment.externalAuth.googleClientId)
           },
         ],
       } as SocialAuthServiceConfig

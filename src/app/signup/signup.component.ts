@@ -8,6 +8,7 @@ import { CreateUserRequest, ExternalAuth } from '../api/models/user.model';
 import { UserService } from '../api/user.service';
 import { AuthService } from '../helpers/auth.service';
 import { Publisher } from '../helpers/publisher';
+import { StorageService } from '../helpers/storage.service';
 import { SpinnerService } from '../ui/spinner/spinner.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class SignupComponent implements OnInit {
 
   private _isPasswordVisible: boolean;
   private _responseErrorMessage: string;
+  private _googleSignupErrorMessage: string;
   
   private readonly _confirmSignup: Publisher<boolean>;
 
@@ -28,7 +30,8 @@ export class SignupComponent implements OnInit {
     private readonly _userService: UserService,
     private readonly _spinnerService: SpinnerService,
     private readonly _router: Router,
-    private readonly _authService: AuthService) {
+    private readonly _authService: AuthService,
+    private readonly _storageService: StorageService) {
     this._isPasswordVisible = false;
     this._confirmSignup = new Publisher<boolean>();
   }
@@ -92,13 +95,23 @@ export class SignupComponent implements OnInit {
         idToken: user.idToken,
         provider: user.provider
       }
+      this._spinnerService.runSpinner();
       this._userService.authenticateExternalUser(externalAuth).subscribe(
-        genericResponse => this.respondAuthenticateExternalUser(genericResponse));
-    }, error => console.log(error))
+        genericResponse => this.respondAuthenticateExternalUser(genericResponse),
+        (responseError: HttpErrorResponse) => this.handleAuthenticateExternalUserError(responseError));
+    });
   }
 
   private respondAuthenticateExternalUser(genericResponse: GenericResponse<string>): void {
-    console.log(genericResponse);
+    this._googleSignupErrorMessage = '';
+    this._storageService.token = genericResponse.payload;
+    this._router.navigate(['product-browse']);
+    this._spinnerService.stopSpinner();
+  }
+
+  private handleAuthenticateExternalUserError(responseError: HttpErrorResponse): void {
+    this._googleSignupErrorMessage = responseError.error.message;
+    this._spinnerService.stopSpinner();
   }
 
   public get isPasswordVisible(): boolean {

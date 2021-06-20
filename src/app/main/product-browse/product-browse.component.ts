@@ -83,4 +83,9 @@ export class ProductBrowseComponent implements OnInit {
   openCreateProduct() {
     this.openCreateProductCommand.publish(true);
   }
+
+  getCreatedOrEditedProduct(product: Product) {
+    console.log(product);
+    this.openCreateProductCommand.publish(false);
+  }
 }

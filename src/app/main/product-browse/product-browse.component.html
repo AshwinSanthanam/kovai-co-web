@@ -38,5 +38,5 @@
 </app-dialog>
 
 <app-dialog [popup-command]="openCreateProductCommand">
-    <app-create-product></app-create-product>
+    <app-create-product (get-product)="getCreatedOrEditedProduct($event)"></app-create-product>
 </app-dialog>

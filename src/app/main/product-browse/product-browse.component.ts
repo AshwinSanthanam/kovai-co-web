@@ -15,10 +15,12 @@ export class ProductBrowseComponent implements OnInit {
 
   public numberOfSelectedTiles: number;
   public confirmDeleteCommand: Publisher<boolean>;
+  openCreateProductCommand: Publisher<boolean>;
 
   constructor(private readonly _activatedRoute: ActivatedRoute) {
     this.numberOfSelectedTiles = 0;
     this.confirmDeleteCommand = new Publisher<boolean>();
+    this.openCreateProductCommand = new Publisher<boolean>();
   }
 
   ngOnInit(): void {
@@ -76,5 +78,9 @@ export class ProductBrowseComponent implements OnInit {
 
   addToCart(i: number) {
     this.productGrid[i].isSelected = !this.productGrid[i].isSelected;
+  }
+
+  openCreateProduct() {
+    this.openCreateProductCommand.publish(true);
   }
 }

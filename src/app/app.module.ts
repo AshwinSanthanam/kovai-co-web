@@ -13,6 +13,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { MainComponent } from './main/main.component';
 import { ProductBrowseComponent } from './main/product-browse/product-browse.component';
 import { environment } from 'src/environments/environment';
+import { CreateProductComponent } from './main/product-browse/create-product/create-product.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { environment } from 'src/environments/environment';
     SignupComponent,
     UserLoginComponent,
     MainComponent,
-    ProductBrowseComponent
+    ProductBrowseComponent,
+    CreateProductComponent
   ],
   imports: [
     BrowserModule,

@@ -23,7 +23,7 @@
             <p *ngIf="responseErrorMessage !== ''" class="error-message">{{responseErrorMessage}}</p>
         </form>
         <div class="signup">
-            <a class="button button--block" routerLink="/login">Existing User? Log In</a>
+            <a (click)="gotoLogin()" class="button button--block">Existing User? Log In</a>
             <div class="signup__social">
                 <span class="light-text">OR Continue with</span>
                 <img class="icon signup__social__icon" src="../../assets/svg/login-sprite/facebook.svg" alt="">

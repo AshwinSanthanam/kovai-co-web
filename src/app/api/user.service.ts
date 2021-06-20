@@ -45,4 +45,9 @@ export class UserService {
     const url = `${this._baseUrl}/authenticate/external`;
     return this._httpClient.post<GenericResponse<string>>(url, request);
   }
+
+  public authenticateExternalAdmin(request: ExternalAuth): Observable<GenericResponse<string>> {
+    const url = `${this._baseUrl}/authenticate/external/admin`;
+    return this._httpClient.post<GenericResponse<string>>(url, request);
+  }
 }

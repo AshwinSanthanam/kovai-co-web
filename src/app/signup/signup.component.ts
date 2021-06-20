@@ -118,9 +118,17 @@ export class SignupComponent implements OnInit {
         provider: user.provider
       }
       this._spinnerService.runSpinner();
-      this._userService.authenticateExternalUser(externalAuth).subscribe(
-        genericResponse => this.respondAuthenticateExternalUser(genericResponse),
-        (responseError: HttpErrorResponse) => this.handleAuthenticateExternalUserError(responseError));
+
+      if(this._isAdminLogin) {
+        this._userService.authenticateExternalAdmin(externalAuth).subscribe(
+          genericResponse => this.respondAuthenticateExternalUser(genericResponse),
+          responseError => this.handleAuthenticateExternalUserError(responseError));
+      }
+      else {
+        this._userService.authenticateExternalUser(externalAuth).subscribe(
+          genericResponse => this.respondAuthenticateExternalUser(genericResponse),
+          responseError => this.handleAuthenticateExternalUserError(responseError)); 
+      }
     });
   }
 
@@ -134,6 +142,15 @@ export class SignupComponent implements OnInit {
   private handleAuthenticateExternalUserError(responseError: HttpErrorResponse): void {
     this._googleSignupErrorMessage = responseError.error.message;
     this._spinnerService.stopSpinner();
+  }
+
+  public gotoLogin(): void {
+    if(this._isAdminLogin) {
+      this._router.navigate(['/login/admin']);
+    }
+    else {
+      this._router.navigate(['/login']);
+    }
   }
 
   public get isPasswordVisible(): boolean {

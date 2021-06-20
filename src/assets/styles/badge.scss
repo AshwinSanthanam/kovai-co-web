@@ -1,0 +1,15 @@
+.badge-target {
+  position: relative;
+
+  & .badge {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    top: -1rem;
+    right: -1rem;
+
+    &--hidden {
+      display: none;
+    }
+  }
+}

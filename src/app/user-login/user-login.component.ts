@@ -22,8 +22,7 @@ export class UserLoginComponent implements OnInit {
     private readonly _userService: UserService,
     private readonly _spinnerService: SpinnerService,
     private readonly _router: Router,
-    private readonly _storageService: StorageService,
-    private readonly _jwtDecoderService: JwtDecoderService) {
+    private readonly _storageService: StorageService) {
     this._isPasswordVisible = false;
     this._responseErrorMessage = '';
   }
@@ -42,8 +41,6 @@ export class UserLoginComponent implements OnInit {
       this._userService.authenticateUser(this.loginForm.value).subscribe(genericResponse => {
         this._responseErrorMessage = '';
         this._storageService.token = genericResponse.payload;
-        var decodedToken = this._jwtDecoderService.decode(this._storageService.token);
-        this._storageService.role = decodedToken.role;
         this._spinnerService.stopSpinner();
         this._router.navigate(['/product-browse']);
       }, (response: HttpErrorResponse) => {

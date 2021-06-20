@@ -14,12 +14,4 @@ export class StorageService {
   public set token(value: string) {
     localStorage.setItem('token', value);
   }
-
-  public get role(): string {
-    return localStorage.getItem('role');
-  }
-
-  public set role(value: string) {
-    localStorage.setItem('role', value);
-  }
 }

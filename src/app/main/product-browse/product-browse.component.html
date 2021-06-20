@@ -8,8 +8,8 @@
                 <button *ngIf="adminMode && numberOfSelectedTiles === 1" (click)="openEditProduct()" class="button product__action-bar__button">EDIT</button>
             </div>
             <div class="product__search big-input">
-                <input placeholder="Search" class="big-input__input" type="text">
-                <img class="big-input__action" src="../../../assets/images/nav-bar/search.png" alt="">
+                <input [(ngModel)]="searchString" placeholder="Search" class="big-input__input" type="text">
+                <img class="big-input__action" (click)="getProducts()" src="../../../assets/images/nav-bar/search.png" alt="">
             </div>
         </div>
         <div class="product-tile-container">

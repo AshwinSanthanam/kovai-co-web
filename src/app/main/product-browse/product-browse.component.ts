@@ -15,6 +15,8 @@ export class ProductBrowseComponent implements OnInit {
   public adminMode: boolean;
   public productGrid: { isSelected: boolean, product: Product}[];
 
+  public searchString: string = '';
+
   public numberOfSelectedTiles: number;
   public confirmDeleteCommand: Publisher<boolean>;
   editProductPublisher: Publisher<Product>;
@@ -38,8 +40,8 @@ export class ProductBrowseComponent implements OnInit {
     this.getProducts();
   }
 
-  private getProducts() {
-    this._productService.getProducts(10, 0, '').subscribe(response => {
+  public getProducts() {
+    this._productService.getProducts(10, 0, this.searchString).subscribe(response => {
       const products = response.payload;
       this.productGrid = [];
 

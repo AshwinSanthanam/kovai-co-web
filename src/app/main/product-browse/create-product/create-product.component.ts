@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/api/models/product.model';
 import { ProductService } from 'src/app/api/product.service';
 import { Publisher } from 'src/app/helpers/publisher';
+import { SpinnerService } from 'src/app/ui/spinner/spinner.service';
 
 @Component({
   selector: 'app-create-product',
@@ -24,7 +25,9 @@ export class CreateProductComponent implements OnInit {
   @Output('get-product')
   productEmitter: EventEmitter<Product>;
 
-  constructor(private readonly _productService: ProductService) {
+  constructor(
+    private readonly _productService: ProductService,
+    private readonly _spinnerService: SpinnerService) {
     this._noPreview = "/assets/images/app/no-preview.jpg";
     this.productEmitter = new EventEmitter<Product>();
     this.productId = 0;
@@ -71,12 +74,17 @@ export class CreateProductComponent implements OnInit {
         imageUrl: formValue.imageUrl
       };
       this.productId = 0;
+      this._spinnerService.runSpinner();
       this._productService.createOrUpdateProduct(product).
       subscribe(response => {
         this.productEmitter.emit(product);
         this.productForm.reset();
         this.productId = 0;
-      }, (errorResponse: HttpErrorResponse) => this.responseErrorMessage = errorResponse.error.message);
+        this._spinnerService.stopSpinner();
+      }, (errorResponse: HttpErrorResponse) => {
+        this.responseErrorMessage = errorResponse.error.message;
+        this._spinnerService.stopSpinner();
+      });
     }
   }
 

@@ -15,12 +15,14 @@ export class ProductBrowseComponent implements OnInit {
 
   public numberOfSelectedTiles: number;
   public confirmDeleteCommand: Publisher<boolean>;
+  editProductPublisher: Publisher<Product>;
   openCreateProductCommand: Publisher<boolean>;
 
   constructor(private readonly _activatedRoute: ActivatedRoute) {
     this.numberOfSelectedTiles = 0;
     this.confirmDeleteCommand = new Publisher<boolean>();
     this.openCreateProductCommand = new Publisher<boolean>();
+    this.editProductPublisher = new Publisher<Product>();
   }
 
   ngOnInit(): void {
@@ -87,5 +89,11 @@ export class ProductBrowseComponent implements OnInit {
   getCreatedOrEditedProduct(product: Product) {
     console.log(product);
     this.openCreateProductCommand.publish(false);
+  }
+
+  openEditProduct() {
+    const productToEdit = this.productGrid.filter(x => x.isSelected)[0].product;
+    this.editProductPublisher.publish(productToEdit);
+    this.openCreateProductCommand.publish(true);
   }
 }

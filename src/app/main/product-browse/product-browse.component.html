@@ -5,7 +5,7 @@
             <div>
                 <button *ngIf="adminMode" (click)="openCreateProduct()" class="button button--accent product__action-bar__button">NEW</button>
                 <button *ngIf="adminMode && numberOfSelectedTiles > 0" (click)="openDeletePopup()" class="button product__action-bar__button">DELETE</button>
-                <button *ngIf="adminMode && numberOfSelectedTiles === 1" class="button product__action-bar__button">EDIT</button>
+                <button *ngIf="adminMode && numberOfSelectedTiles === 1" (click)="openEditProduct()" class="button product__action-bar__button">EDIT</button>
             </div>
             <div class="product__search big-input">
                 <input placeholder="Search" class="big-input__input" type="text">
@@ -38,5 +38,5 @@
 </app-dialog>
 
 <app-dialog [popup-command]="openCreateProductCommand">
-    <app-create-product (get-product)="getCreatedOrEditedProduct($event)"></app-create-product>
+    <app-create-product [edit-product-publisher]="editProductPublisher" (get-product)="getCreatedOrEditedProduct($event)"></app-create-product>
 </app-dialog>

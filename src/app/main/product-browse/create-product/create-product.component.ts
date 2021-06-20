@@ -13,6 +13,10 @@ export class CreateProductComponent implements OnInit {
   private readonly _noPreview: string;
   imagePreviewUrl: string;
   productForm: FormGroup;
+  productId: number;
+
+  @Input('edit-product-publisher')
+  editProductPublisher: Publisher<Product>;
 
   @Output('get-product')
   productEmitter: EventEmitter<Product>;
@@ -20,6 +24,7 @@ export class CreateProductComponent implements OnInit {
   constructor() {
     this._noPreview = "/assets/images/app/no-preview.jpg";
     this.productEmitter = new EventEmitter<Product>();
+    this.productId = 0;
   }
 
   ngOnInit(): void {
@@ -39,6 +44,16 @@ export class CreateProductComponent implements OnInit {
         this.imagePreviewUrl = this._noPreview;
       }
     });
+
+    this.editProductPublisher.subscribe(product => {
+      this.productForm.reset();
+      this.productId = product.id;
+      this.productForm.patchValue({
+        'name': product.name,
+        'price': product.price,
+        'imageUrl': product.imageUrl
+      });
+    });
   }
 
   submit() {
@@ -47,7 +62,7 @@ export class CreateProductComponent implements OnInit {
     if(this.productForm.valid) {
       const formValue = this.productForm.value;
       const product: Product = {
-        id: 0,
+        id: this.productId,
         name: formValue.name,
         price: formValue.price,
         imageUrl: formValue.imageUrl

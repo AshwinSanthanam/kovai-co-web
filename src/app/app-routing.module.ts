@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { UserAuthGuard } from './helpers/auth-guard/user-auth.guard.';
 import { MainComponent } from './main/main.component';
 import { ProductBrowseComponent } from './main/product-browse/product-browse.component';
 import { SignupComponent } from './signup/signup.component';
@@ -13,7 +14,9 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       { path: 'product-browse', component: ProductBrowseComponent}
-    ]}
+    ],
+    canActivate: [UserAuthGuard]
+  }
 ];
 
 @NgModule({

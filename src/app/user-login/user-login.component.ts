@@ -2,8 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SocialUser } from 'angularx-social-login';
 import { GenericResponse } from '../api/models/generic-response.model';
+import { ExternalAuth } from '../api/models/user.model';
 import { UserService } from '../api/user.service';
+import { AuthService } from '../helpers/auth.service';
 import { StorageService } from '../helpers/storage.service';
 import { SpinnerService } from '../ui/spinner/spinner.service';
 
@@ -18,13 +21,15 @@ export class UserLoginComponent implements OnInit {
   private _isPasswordVisible: boolean;
   private _responseErrorMessage: string;
   private _isAdminLogin: boolean;
+  private _googleSignupErrorMessage: string;
 
   constructor(
     private readonly _userService: UserService,
     private readonly _spinnerService: SpinnerService,
     private readonly _router: Router,
     private readonly _storageService: StorageService,
-    private readonly _activatedRoute: ActivatedRoute) {
+    private readonly _activatedRoute: ActivatedRoute,
+    private readonly _authService: AuthService) {
     this._isPasswordVisible = false;
     this._responseErrorMessage = '';
   }
@@ -80,11 +85,42 @@ export class UserLoginComponent implements OnInit {
     this._isPasswordVisible = !this._isPasswordVisible;
   }
 
+  public googleSignIn(): void {
+    this._authService.signInWithGoogle()
+    .then(res => {
+      const user: SocialUser = { ...res };
+      const externalAuth: ExternalAuth = {
+        idToken: user.idToken,
+        provider: user.provider
+      }
+      this._spinnerService.runSpinner();
+      this._userService.authenticateExternalUser(externalAuth).subscribe(
+        genericResponse => this.respondAuthenticateExternalUser(genericResponse),
+        (responseError: HttpErrorResponse) => this.handleAuthenticateExternalUserError(responseError));
+    });
+  }
+
+  private respondAuthenticateExternalUser(genericResponse: GenericResponse<string>): void {
+    this._googleSignupErrorMessage = '';
+    this._storageService.token = genericResponse.payload;
+    this._router.navigate(['product-browse']);
+    this._spinnerService.stopSpinner();
+  }
+
+  private handleAuthenticateExternalUserError(responseError: HttpErrorResponse): void {
+    this._googleSignupErrorMessage = responseError.error.message;
+    this._spinnerService.stopSpinner();
+  }
+
   public get isPasswordVisible(): boolean {
     return this._isPasswordVisible;
   }
 
   public get responseErrorMessage(): string {
     return this._responseErrorMessage;
+  }
+
+  public get googleSignupErrorMessage(): string {
+    return this._googleSignupErrorMessage;
   }
 }

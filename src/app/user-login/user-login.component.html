@@ -26,8 +26,9 @@
             <div class="signup__social">
                 <span class="light-text">OR Continue with</span>
                 <img class="icon signup__social__icon" src="../../assets/svg/login-sprite/facebook.svg" alt="">
-                <img class="icon signup__social__icon" src="../../assets/svg/login-sprite/google.svg" alt="">
+                <img (click)="googleSignIn()" class="icon signup__social__icon" src="../../assets/svg/login-sprite/google.svg" alt="">
             </div>
+            <p *ngIf="googleSignupErrorMessage !== ''" class="error-message">{{googleSignupErrorMessage}}</p>
         </div>
     </div>
 </div>

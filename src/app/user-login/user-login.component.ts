@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticateUserRequest } from '../api/models/user.model';
 import { UserService } from '../api/user.service';
 import { SpinnerService } from '../ui/spinner/spinner.service';
@@ -18,7 +19,8 @@ export class UserLoginComponent implements OnInit {
 
   constructor(
     private readonly _userService: UserService,
-    private readonly _spinnerService: SpinnerService) {
+    private readonly _spinnerService: SpinnerService,
+    private readonly _router: Router) {
     this._isPasswordVisible = false;
     this._responseErrorMessage = '';
   }
@@ -38,6 +40,7 @@ export class UserLoginComponent implements OnInit {
         this._responseErrorMessage = '';
         console.log(genericResponse);
         this._spinnerService.stopSpinner();
+        this._router.navigate(['/product-browse']);
       }, (response: HttpErrorResponse) => {
         if(response.status == 401) {
           this._responseErrorMessage = response.error.message;

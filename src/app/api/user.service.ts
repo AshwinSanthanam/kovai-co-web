@@ -26,6 +26,11 @@ export class UserService {
     return this._httpClient.post<GenericResponse<CreateUserResponse>>(this._baseUrl, request);
   }
 
+  public createAdmin(request: CreateUserRequest): Observable<GenericResponse<CreateUserResponse>> {
+    const url = `${this._baseUrl}/admin`;
+    return this._httpClient.post<GenericResponse<CreateUserResponse>>(url, request);
+  }
+
   public authenticateUser(request: AuthenticateUserRequest): Observable<GenericResponse<string>> {
     const url = `${this._baseUrl}/authenticate`;
     return this._httpClient.post<GenericResponse<string>>(url, request);

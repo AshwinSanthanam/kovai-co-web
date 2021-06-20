@@ -1,10 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SocialUser } from 'angularx-social-login';
 import { GenericResponse } from '../api/models/generic-response.model';
-import { CreateUserRequest, ExternalAuth } from '../api/models/user.model';
+import { CreateUserRequest, CreateUserResponse, ExternalAuth } from '../api/models/user.model';
 import { UserService } from '../api/user.service';
 import { AuthService } from '../helpers/auth.service';
 import { Publisher } from '../helpers/publisher';
@@ -21,6 +21,7 @@ export class SignupComponent implements OnInit {
   private _isPasswordVisible: boolean;
   private _responseErrorMessage: string;
   private _googleSignupErrorMessage: string;
+  private _isAdminLogin: boolean;
   
   private readonly _confirmSignup: Publisher<boolean>;
 
@@ -31,7 +32,8 @@ export class SignupComponent implements OnInit {
     private readonly _spinnerService: SpinnerService,
     private readonly _router: Router,
     private readonly _authService: AuthService,
-    private readonly _storageService: StorageService) {
+    private readonly _storageService: StorageService,
+    private readonly _activatedRoute: ActivatedRoute) {
     this._isPasswordVisible = false;
     this._confirmSignup = new Publisher<boolean>();
   }
@@ -40,6 +42,10 @@ export class SignupComponent implements OnInit {
     this.loginForm = new FormGroup({
       'email': new FormControl('', [Validators.required, Validators.email]),
       'password': new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)])
+    });
+
+    this._activatedRoute.params.subscribe(params => {
+      this._isAdminLogin = params['admin'] === 'admin';
     });
   } 
 
@@ -51,19 +57,30 @@ export class SignupComponent implements OnInit {
       const request = this.generateCreateUserRequest();
 
       this._spinnerService.runSpinner();
-      this._userService.createUser(request).subscribe(genericResponse => {
-        this._responseErrorMessage = '';
-        this.loginForm.reset();
-        this._spinnerService.stopSpinner();
-        this._confirmSignup.publish(true);
-      }, (errorResponse: HttpErrorResponse) => {
-        if(errorResponse.status >= 400 && errorResponse.status < 500) {
-          this._responseErrorMessage = errorResponse.error.message;
-          this.loginForm.reset();
-          this._spinnerService.stopSpinner();
-        }
-      });
+      if(this._isAdminLogin) {
+        this._userService.createAdmin(request).subscribe(
+          genericResponse => this.onSuccessFulSignUp(genericResponse),
+          errorResponse => this.onSignUpFailure(errorResponse));
+      }
+      else {
+        this._userService.createUser(request).subscribe(
+          genericResponse => this.onSuccessFulSignUp(genericResponse),
+          errorResponse => this.onSignUpFailure(errorResponse));
+      }
     }
+  }
+
+  private onSuccessFulSignUp(genericResponse: GenericResponse<CreateUserResponse>): void {
+    this._responseErrorMessage = '';
+    this.loginForm.reset();
+    this._spinnerService.stopSpinner();
+    this._confirmSignup.publish(true);
+  }
+
+  private onSignUpFailure(errorResponse: HttpErrorResponse): void {
+    this._responseErrorMessage = errorResponse.error.message;
+    this.loginForm.reset();
+    this._spinnerService.stopSpinner();
   }
 
   private generateCreateUserRequest(): CreateUserRequest {
@@ -84,7 +101,12 @@ export class SignupComponent implements OnInit {
 
   public closeConfirmPopup(): void {
     this._confirmSignup.publish(false);
-    this._router.navigate(['/login']);
+    if(this._isAdminLogin) {
+      this._router.navigate(['/login/admin']);
+    }
+    else {
+      this._router.navigate(['/login']);
+    }
   }
 
   public googleSignIn(): void {

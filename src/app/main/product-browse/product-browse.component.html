@@ -1,20 +1,24 @@
 <div class="center">
     <h2 class="page-title">PRODUCTS</h2>
-    <div class="product-browse">
+    <div class="product-browse product-browse--admin-mode">
         <div class="product__action-bar">
+            <div>
+                <button *ngIf="adminMode" class="button product__action-bar__button">NEW</button>
+                <button *ngIf="adminMode" class="button product__action-bar__button">DELETE</button>
+            </div>
             <div class="product__search big-input">
                 <input placeholder="Search" class="big-input__input" type="text">
                 <img class="big-input__action" src="../../../assets/images/nav-bar/search.png" alt="">
             </div>
         </div>
         <div class="product-tile-container">
-            <app-product-tile purchase-mode="true"></app-product-tile>
-            <app-product-tile purchase-mode="true"></app-product-tile>
-            <app-product-tile purchase-mode="true"></app-product-tile>
+            <app-product-tile [admin-mode]="adminMode"></app-product-tile>
+            <app-product-tile [admin-mode]="adminMode"></app-product-tile>
+            <app-product-tile [admin-mode]="adminMode"></app-product-tile>
     
-            <app-product-tile></app-product-tile>
-            <app-product-tile></app-product-tile>
-            <app-product-tile></app-product-tile>
+            <app-product-tile [admin-mode]="adminMode"></app-product-tile>
+            <app-product-tile [admin-mode]="adminMode"></app-product-tile>
+            <app-product-tile [admin-mode]="adminMode"></app-product-tile>
         </div>
     </div>
 </div>

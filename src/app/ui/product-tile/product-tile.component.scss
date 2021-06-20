@@ -45,6 +45,12 @@
       font-weight: 300;
       letter-spacing: 0.06rem;
     }
+
+    &__price {
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: rgb(68, 68, 68);
+    }
   }
 }
 
@@ -52,11 +58,11 @@
   transform: scale(1.0625);
 }
 
-.product--purchase-mode .product__text {
+.product--admin-mode .product__text {
   text-align: center;
   width: 100%;
 }
 
-.product--purchase-mode .product__add {
+.product--admin-mode .product__add {
   display: none;
 }

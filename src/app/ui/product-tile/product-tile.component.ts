@@ -7,11 +7,11 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ProductTileComponent implements OnInit {
 
-  @Input('purchase-mode')
-  public purchaseMode: boolean;
+  @Input('admin-mode')
+  public adminMode: boolean;
 
   constructor() {
-    this.purchaseMode = false;
+    this.adminMode = false;
   }
 
   ngOnInit(): void {

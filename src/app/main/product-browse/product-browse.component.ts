@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductBrowseComponent implements OnInit {
 
-  constructor() { }
+  public adminMode: boolean;
+
+  constructor() {
+    this.adminMode = true;
+  }
 
   ngOnInit(): void {
   }

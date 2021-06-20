@@ -14,3 +14,8 @@ export class AuthenticateUserRequest {
     email: string;
     password: string;
 }
+
+export class ExternalAuth {
+    provider: string;
+    idToken: string;
+}

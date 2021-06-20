@@ -2,8 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CreateUserRequest } from '../api/models/user.model';
+import { SocialUser } from 'angularx-social-login';
+import { GenericResponse } from '../api/models/generic-response.model';
+import { CreateUserRequest, ExternalAuth } from '../api/models/user.model';
 import { UserService } from '../api/user.service';
+import { AuthService } from '../helpers/auth.service';
 import { Publisher } from '../helpers/publisher';
 import { SpinnerService } from '../ui/spinner/spinner.service';
 
@@ -24,7 +27,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private readonly _userService: UserService,
     private readonly _spinnerService: SpinnerService,
-    private readonly _router: Router) {
+    private readonly _router: Router,
+    private readonly _authService: AuthService) {
     this._isPasswordVisible = false;
     this._confirmSignup = new Publisher<boolean>();
   }
@@ -78,6 +82,23 @@ export class SignupComponent implements OnInit {
   public closeConfirmPopup(): void {
     this._confirmSignup.publish(false);
     this._router.navigate(['/login']);
+  }
+
+  public googleSignIn(): void {
+    this._authService.signInWithGoogle()
+    .then(res => {
+      const user: SocialUser = { ...res };
+      const externalAuth: ExternalAuth = {
+        idToken: user.idToken,
+        provider: user.provider
+      }
+      this._userService.authenticateExternalUser(externalAuth).subscribe(
+        genericResponse => this.respondAuthenticateExternalUser(genericResponse));
+    }, error => console.log(error))
+  }
+
+  private respondAuthenticateExternalUser(genericResponse: GenericResponse<string>): void {
+    console.log(genericResponse);
   }
 
   public get isPasswordVisible(): boolean {

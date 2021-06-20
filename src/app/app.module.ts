@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
 
 import { UiModule } from './ui/ui.module';
 import { ApiModule } from './api/api.module';
@@ -23,10 +25,26 @@ import { ProductBrowseComponent } from './main/product-browse/product-browse.com
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    SocialLoginModule,
     UiModule,
     ApiModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '756422371399-dql4mjnrt5lpapagmv1n8pqvnj3hm4gp.apps.googleusercontent.com'
+            )
+          },
+        ],
+      } as SocialAuthServiceConfig
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

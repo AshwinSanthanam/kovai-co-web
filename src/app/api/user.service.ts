@@ -6,7 +6,8 @@ import { GenericResponse } from './models/generic-response.model';
 import { 
   AuthenticateUserRequest, 
   CreateUserRequest, 
-  CreateUserResponse 
+  CreateUserResponse, 
+  ExternalAuth
 } from './models/user.model';
 
 
@@ -32,6 +33,11 @@ export class UserService {
 
   public authenticateAdmin(request: AuthenticateUserRequest): Observable<GenericResponse<string>> {
     const url = `${this._baseUrl}/authenticate/admin`;
+    return this._httpClient.post<GenericResponse<string>>(url, request);
+  }
+
+  public authenticateExternalUser(request: ExternalAuth): Observable<GenericResponse<string>> {
+    const url = `${this._baseUrl}/authenticate/external`;
     return this._httpClient.post<GenericResponse<string>>(url, request);
   }
 }

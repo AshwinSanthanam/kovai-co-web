@@ -3,7 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { GenericResponse } from './models/generic-response.model';
-import { CreateUserRequest, CreateUserResponse } from './models/user.model';
+import { 
+  AuthenticateUserRequest, 
+  CreateUserRequest, 
+  CreateUserResponse 
+} from './models/user.model';
 
 
 @Injectable({
@@ -19,5 +23,10 @@ export class UserService {
 
   public createUser(request: CreateUserRequest): Observable<GenericResponse<CreateUserResponse>> {
     return this._httpClient.post<GenericResponse<CreateUserResponse>>(this._baseUrl, request);
+  }
+
+  public authenticateUser(request: AuthenticateUserRequest): Observable<GenericResponse<string>> {
+    const url = `${this._baseUrl}/authenticate`;
+    return this._httpClient.post<GenericResponse<string>>(url, request);
   }
 }

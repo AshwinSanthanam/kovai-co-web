@@ -9,3 +9,8 @@ export class CreateUserResponse {
     roleId: number;
     createdOn: string;
 }
+
+export class AuthenticateUserRequest {
+    email: string;
+    password: string;
+}

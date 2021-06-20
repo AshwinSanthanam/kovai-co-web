@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthenticateUserRequest } from '../api/models/user.model';
+import { UserService } from '../api/user.service';
 
 @Component({
   selector: 'app-user-login',
@@ -11,7 +13,7 @@ export class UserLoginComponent implements OnInit {
   public loginForm: FormGroup;
   private _isPasswordVisible: boolean;
 
-  constructor() {
+  constructor(private readonly _userService: UserService) {
     this._isPasswordVisible = false;
   }
 
@@ -24,8 +26,11 @@ export class UserLoginComponent implements OnInit {
 
   public login(): void {
     this.loginForm.markAllAsTouched();
-
-    console.log(this.loginForm.value);
+    if(this.loginForm.valid) {
+      this._userService.authenticateUser(this.loginForm.value).subscribe(genericResponse => {
+        console.log(genericResponse);
+      });
+    }
   }
 
   public validate(control: string, error: string): boolean {

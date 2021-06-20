@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticateUserRequest } from '../api/models/user.model';
 import { UserService } from '../api/user.service';
+import { SpinnerService } from '../ui/spinner/spinner.service';
 
 @Component({
   selector: 'app-user-login',
@@ -15,7 +16,9 @@ export class UserLoginComponent implements OnInit {
   private _isPasswordVisible: boolean;
   private _responseErrorMessage: string;
 
-  constructor(private readonly _userService: UserService) {
+  constructor(
+    private readonly _userService: UserService,
+    private readonly _spinnerService: SpinnerService) {
     this._isPasswordVisible = false;
     this._responseErrorMessage = '';
   }
@@ -30,13 +33,16 @@ export class UserLoginComponent implements OnInit {
   public login(): void {
     this.loginForm.markAllAsTouched();
     if(this.loginForm.valid) {
+      this._spinnerService.runSpinner();
       this._userService.authenticateUser(this.loginForm.value).subscribe(genericResponse => {
         this._responseErrorMessage = '';
         console.log(genericResponse);
+        this._spinnerService.stopSpinner();
       }, (response: HttpErrorResponse) => {
         if(response.status == 401) {
           this._responseErrorMessage = response.error.message;
         }
+        this._spinnerService.stopSpinner();
       });
     }
   }

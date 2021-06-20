@@ -15,11 +15,11 @@
         <div class="product-tile-container">
             <div *ngFor="let productTile of productGrid; let i = index">
                 <div class="badge-target" (click)="onProductTileClick(i)">
-                    <app-product-tile [image-url]="productTile.product.imageUrl" [admin-mode]="adminMode">
+                    <app-product-tile (add)="addToCart(i)" [image-url]="productTile.product.imageUrl" [admin-mode]="adminMode">
                         <ng-container id="title">{{productTile.product.name}}</ng-container>
                         <ng-container id="price">{{productTile.product.price}}</ng-container>
                     </app-product-tile>
-                    <img class="badge" [class.badge--hidden]="!(adminMode && productTile.isSelected)" src="../../../assets/images/app/check.png" alt="">
+                    <img class="badge" [class.badge--hidden]="!(productTile.isSelected)" src="../../../assets/images/app/check.png" alt="">
                 </div>
             </div>
         </div>

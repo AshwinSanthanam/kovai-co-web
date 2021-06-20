@@ -16,7 +16,7 @@ export class ProductBrowseComponent implements OnInit {
   public confirmDeleteCommand: Publisher<boolean>;
 
   constructor() {
-    this.adminMode = true;
+    this.adminMode = false;
     this.numberOfSelectedTiles = 0;
     this.confirmDeleteCommand = new Publisher<boolean>();
   }
@@ -68,5 +68,9 @@ export class ProductBrowseComponent implements OnInit {
 
   public closeDeletePopup(): void {
     this.confirmDeleteCommand.publish(false);
+  }
+
+  addToCart(i: number) {
+    this.productGrid[i].isSelected = !this.productGrid[i].isSelected;
   }
 }

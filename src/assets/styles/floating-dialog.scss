@@ -1,0 +1,32 @@
+.floating-dialog {
+  width: 700px;
+  background-color: white;
+  border-radius: 2px;
+  overflow: hidden;
+  padding-bottom: 3rem;
+
+  & &__title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: white;
+    background-color: var(--color-accent);
+    padding: 1.8rem 3rem;
+    margin: 0;
+  }
+
+  & &__fields {
+    padding: 2.8rem 3rem 1.4rem 3rem;
+  }
+
+  & &__action-area {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    & .floating-dialog__action {
+      margin-right: 3rem;
+      width: 10rem;
+      margin-bottom: 0;
+    }
+  }
+}

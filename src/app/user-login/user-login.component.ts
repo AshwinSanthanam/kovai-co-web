@@ -9,8 +9,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class UserLoginComponent implements OnInit {
 
   public loginForm: FormGroup;
+  private _isPasswordVisible: boolean;
 
-  constructor() { }
+  constructor() {
+    this._isPasswordVisible = false;
+  }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -20,6 +23,21 @@ export class UserLoginComponent implements OnInit {
   }
 
   public login(): void {
+    this.loginForm.markAllAsTouched();
+
     console.log(this.loginForm.value);
+  }
+
+  public validate(control: string, error: string): boolean {
+    const formControl = this.loginForm.controls[control];
+    return (formControl.errors != null && formControl.errors[error]) && ((formControl.touched && formControl.dirty) || formControl.touched);
+  }
+
+  public togglePasswordVisibility(): void {
+    this._isPasswordVisible = !this._isPasswordVisible;
+  }
+
+  public get isPasswordVisible(): boolean {
+    return this._isPasswordVisible;
   }
 }

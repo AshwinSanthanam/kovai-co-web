@@ -6,11 +6,17 @@
                 <fieldset class="form-field">
                   <label class="form-field__label">Email ID</label>
                   <input formControlName="email" class="form-field__input" type="email">
+                  <p *ngIf="validate('email', 'required')" class="form-field__error">Email is Required.</p>
+                  <p *ngIf="validate('email', 'email')" class="form-field__error">Invalid Email.</p>
                 </fieldset>
                 <fieldset class="form-field">
                   <label class="form-field__label">Password</label>
-                  <input formControlName="password" class="form-field__input" type="password">
-                  <span class="form-field__action">Show</span>
+                  <input *ngIf="!isPasswordVisible" formControlName="password" class="form-field__input" type="password">
+                  <input *ngIf="isPasswordVisible" formControlName="password" class="form-field__input" type="text">
+                  <span (click)="togglePasswordVisibility()" class="form-field__action">{{ isPasswordVisible ? 'Hide' : 'Show' }}</span>
+                  <p *ngIf="validate('password', 'required')" class="form-field__error">Password is Required.</p>
+                  <p *ngIf="validate('password', 'minlength')" class="form-field__error">Password must contain atleast 8 characters.</p>
+                  <p *ngIf="validate('password', 'maxlength')" class="form-field__error">Password must contain atmost 20 characters.</p>
                 </fieldset>
             </section>
             <button type="submit" class="button button--thick button--block button--accent">LOGIN</button>

@@ -10,6 +10,9 @@ export class ProductTileComponent implements OnInit {
   @Input('admin-mode')
   public adminMode: boolean;
 
+  @Input('image-url')
+  public imageUrl: string;
+
   constructor() {
     this.adminMode = false;
   }

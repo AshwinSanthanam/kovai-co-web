@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'src/app/api/models/product.model';
 
 @Component({
   selector: 'app-product-browse',
@@ -8,12 +9,52 @@ import { Component, OnInit } from '@angular/core';
 export class ProductBrowseComponent implements OnInit {
 
   public adminMode: boolean;
+  public productGrid: { isSelected: boolean, product: Product}[];
+
+  public numberOfSelectedTiles: number;
 
   constructor() {
     this.adminMode = true;
+    this.numberOfSelectedTiles = 0;
   }
 
   ngOnInit(): void {
+    const products = [
+      { id: 1, name: 'sofa sets', price: 45000, imageUrl: 'https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg' },
+      { id: 2, name: 'beds', price: 12500, imageUrl: 'https://images.pexels.com/photos/1374125/pexels-photo-1374125.jpeg' },
+      { id: 3, name: 'chairs', price: 2400, imageUrl: 'https://images.pexels.com/photos/1233340/pexels-photo-1233340.jpeg' },
+      { id: 4, name: 'mattresses', price: 8600, imageUrl: 'https://images.pexels.com/photos/2374959/pexels-photo-2374959.jpeg' }
+    ];
+    this.productGrid = [];
+
+    for (const product of products) {
+      this.productGrid.push({ isSelected: false, product: product });
+    }
+  }
+
+  public onProductTileClick(i: number): void {
+    if(this.adminMode){
+      this.productGrid[i].isSelected = !this.productGrid[i].isSelected;
+        if(this.productGrid[i].isSelected) {
+          this.numberOfSelectedTiles++;
+        }
+        else {
+          this.numberOfSelectedTiles--;
+        }
+    }
+  }
+
+  public deleteSelected(): void {
+    if(this.adminMode) {
+      const newArray = [];
+      for (const productTile of this.productGrid) {
+        if(!productTile.isSelected) {
+          newArray.push(productTile);
+        }
+      }
+      this.productGrid = newArray;
+      this.numberOfSelectedTiles = 0;
+    }
   }
 
 }

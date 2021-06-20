@@ -4,7 +4,8 @@
         <div class="product__action-bar">
             <div>
                 <button *ngIf="adminMode" class="button product__action-bar__button">NEW</button>
-                <button *ngIf="adminMode" class="button product__action-bar__button">DELETE</button>
+                <button *ngIf="adminMode && numberOfSelectedTiles > 0" (click)="deleteSelected()" class="button product__action-bar__button">DELETE</button>
+                <button *ngIf="adminMode && numberOfSelectedTiles === 1" class="button product__action-bar__button">EDIT</button>
             </div>
             <div class="product__search big-input">
                 <input placeholder="Search" class="big-input__input" type="text">
@@ -12,13 +13,14 @@
             </div>
         </div>
         <div class="product-tile-container">
-            <div class="badge-target">
-                <app-product-tile image-url="/assets/images/products/white.jpg" [admin-mode]="adminMode">
-                    <ng-container id="title">SOFAS SETS</ng-container>
-                    <ng-container id="slogan">Lounge Around</ng-container>
-                    <ng-container id="price">1359</ng-container>
-                </app-product-tile>
-                <img class="badge" [class.badge--hidden]="!adminMode" src="../../../assets/images/app/check.png" alt="">
+            <div *ngFor="let productTile of productGrid; let i = index">
+                <div class="badge-target" (click)="onProductTileClick(i)">
+                    <app-product-tile [image-url]="productTile.product.imageUrl" [admin-mode]="adminMode">
+                        <ng-container id="title">{{productTile.product.name}}</ng-container>
+                        <ng-container id="price">{{productTile.product.price}}</ng-container>
+                    </app-product-tile>
+                    <img class="badge" [class.badge--hidden]="!(adminMode && productTile.isSelected)" src="../../../assets/images/app/check.png" alt="">
+                </div>
             </div>
         </div>
     </div>

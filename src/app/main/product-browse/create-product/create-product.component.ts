@@ -53,11 +53,13 @@ export class CreateProductComponent implements OnInit {
         imageUrl: formValue.imageUrl
       };
       this.productEmitter.emit(product);
+      this.productForm.reset();
     }
   }
 
   cancel() {
     this.productEmitter.emit(null);
+    this.productForm.reset();
   }
 
   public validate(control: string, error: string): boolean {

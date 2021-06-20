@@ -25,5 +25,9 @@
     align-items: center;
     justify-content: flex-end;
     padding: 0 1.8rem;
+
+    & .confirmation__action {
+      margin-right: 2rem;
+    }
   }
 }

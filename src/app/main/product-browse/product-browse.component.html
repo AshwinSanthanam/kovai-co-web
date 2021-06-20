@@ -4,7 +4,7 @@
         <div class="product__action-bar">
             <div>
                 <button *ngIf="adminMode" class="button product__action-bar__button">NEW</button>
-                <button *ngIf="adminMode && numberOfSelectedTiles > 0" (click)="deleteSelected()" class="button product__action-bar__button">DELETE</button>
+                <button *ngIf="adminMode && numberOfSelectedTiles > 0" (click)="openDeletePopup()" class="button product__action-bar__button">DELETE</button>
                 <button *ngIf="adminMode && numberOfSelectedTiles === 1" class="button product__action-bar__button">EDIT</button>
             </div>
             <div class="product__search big-input">
@@ -25,3 +25,14 @@
         </div>
     </div>
 </div>
+
+<app-dialog [popup-command]="confirmDeleteCommand">
+    <article class="confirmation delete-confirmation">
+        <h2 class="confirmation__title">Confirm Action</h2>
+        <p class="confirmation__description">Are you sure you want to delete?</p>
+        <section class="confirmation__actions">
+            <button (click)="deleteSelected()" class="button confirmation__action">OK</button>
+            <button (click)="closeDeletePopup()" class="button button--accent confirmation__action">CANCEL</button>
+        </section>
+    </article>
+</app-dialog>

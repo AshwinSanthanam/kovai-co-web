@@ -1,6 +1,7 @@
 @import "../../../assets/styles/big-input.scss";
 @import "../../../assets/styles/button.scss";
 @import "../../../assets/styles/badge.scss";
+@import "../../../assets/styles/confirmation.scss";
 
 .page-title {
   font-size: 2rem;
@@ -49,4 +50,12 @@
   margin-right: 2rem;
   margin-bottom: 2rem;
   margin-top: 3rem;
+}
+
+.delete-confirmation {
+  width: 500px;
+}
+
+.confirmation__action {
+  width: 100px;
 }

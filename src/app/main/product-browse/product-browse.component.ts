@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/api/models/product.model';
+import { Publisher } from 'src/app/helpers/publisher';
 
 @Component({
   selector: 'app-product-browse',
@@ -12,10 +13,12 @@ export class ProductBrowseComponent implements OnInit {
   public productGrid: { isSelected: boolean, product: Product}[];
 
   public numberOfSelectedTiles: number;
+  public confirmDeleteCommand: Publisher<boolean>;
 
   constructor() {
     this.adminMode = true;
     this.numberOfSelectedTiles = 0;
+    this.confirmDeleteCommand = new Publisher<boolean>();
   }
 
   ngOnInit(): void {
@@ -44,7 +47,13 @@ export class ProductBrowseComponent implements OnInit {
     }
   }
 
+  public openDeletePopup(): void {
+    this.confirmDeleteCommand.publish(true);
+  }
+
   public deleteSelected(): void {
+    this.confirmDeleteCommand.publish(false);
+
     if(this.adminMode) {
       const newArray = [];
       for (const productTile of this.productGrid) {
@@ -57,4 +66,7 @@ export class ProductBrowseComponent implements OnInit {
     }
   }
 
+  public closeDeletePopup(): void {
+    this.confirmDeleteCommand.publish(false);
+  }
 }

@@ -14,9 +14,8 @@ const routes: Routes = [
     path: '', 
     component: MainComponent,
     children: [
-      { path: 'product-browse', component: ProductBrowseComponent}
-    ],
-    canActivate: [AdminUserAuthGuard]
+      { path: 'product-browse', component: ProductBrowseComponent, canActivate: [AdminUserAuthGuard]}
+    ]
   }
 ];
 

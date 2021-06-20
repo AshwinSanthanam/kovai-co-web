@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticateUserRequest } from '../api/models/user.model';
 import { UserService } from '../api/user.service';
+import { StorageService } from '../helpers/storage.service';
 import { SpinnerService } from '../ui/spinner/spinner.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class UserLoginComponent implements OnInit {
   constructor(
     private readonly _userService: UserService,
     private readonly _spinnerService: SpinnerService,
-    private readonly _router: Router) {
+    private readonly _router: Router,
+    private readonly _storageService: StorageService) {
     this._isPasswordVisible = false;
     this._responseErrorMessage = '';
   }
@@ -38,7 +40,7 @@ export class UserLoginComponent implements OnInit {
       this._spinnerService.runSpinner();
       this._userService.authenticateUser(this.loginForm.value).subscribe(genericResponse => {
         this._responseErrorMessage = '';
-        console.log(genericResponse);
+        this._storageService.token = genericResponse.payload;
         this._spinnerService.stopSpinner();
         this._router.navigate(['/product-browse']);
       }, (response: HttpErrorResponse) => {

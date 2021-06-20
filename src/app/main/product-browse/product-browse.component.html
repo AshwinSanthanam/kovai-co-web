@@ -3,7 +3,7 @@
     <div class="product-browse product-browse--admin-mode">
         <div class="product__action-bar">
             <div>
-                <button *ngIf="adminMode" class="button product__action-bar__button">NEW</button>
+                <button *ngIf="adminMode" class="button button--accent product__action-bar__button">NEW</button>
                 <button *ngIf="adminMode && numberOfSelectedTiles > 0" (click)="openDeletePopup()" class="button product__action-bar__button">DELETE</button>
                 <button *ngIf="adminMode && numberOfSelectedTiles === 1" class="button product__action-bar__button">EDIT</button>
             </div>

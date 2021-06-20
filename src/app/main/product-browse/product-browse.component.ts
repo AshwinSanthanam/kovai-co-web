@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/api/models/product.model';
 import { ProductService } from 'src/app/api/product.service';
 import { Publisher } from 'src/app/helpers/publisher';
+import { SpinnerService } from 'src/app/ui/spinner/spinner.service';
 
 @Component({
   selector: 'app-product-browse',
@@ -21,7 +22,8 @@ export class ProductBrowseComponent implements OnInit {
 
   constructor(
     private readonly _activatedRoute: ActivatedRoute,
-    private readonly _productService: ProductService) {
+    private readonly _productService: ProductService,
+    private readonly _spinnerService: SpinnerService) {
     this.numberOfSelectedTiles = 0;
     this.confirmDeleteCommand = new Publisher<boolean>();
     this.openCreateProductCommand = new Publisher<boolean>();
@@ -67,11 +69,20 @@ export class ProductBrowseComponent implements OnInit {
 
   public deleteSelected(): void {
     this.confirmDeleteCommand.publish(false);
-
     if(this.adminMode) {
+      let count = 0;
+      this._spinnerService.runSpinner();
       for (const productTile of this.productGrid) {
         if(productTile.isSelected) {
-          this._productService.deleteProduct(productTile.product.id).subscribe(x => {});
+          count++;
+          this._productService.deleteProduct(productTile.product.id).subscribe(x => 
+          {
+            count--;
+            if(count == 0) {
+              this._spinnerService.stopSpinner();
+              this.getProducts();
+            }
+          });
         }
       }
       this.numberOfSelectedTiles = 0;

@@ -75,6 +75,7 @@ export class CreateProductComponent implements OnInit {
       subscribe(response => {
         this.productEmitter.emit(product);
         this.productForm.reset();
+        this.productId = 0;
       }, (errorResponse: HttpErrorResponse) => this.responseErrorMessage = errorResponse.error.message);
     }
   }

@@ -94,9 +94,16 @@ export class UserLoginComponent implements OnInit {
         provider: user.provider
       }
       this._spinnerService.runSpinner();
-      this._userService.authenticateExternalUser(externalAuth).subscribe(
-        genericResponse => this.respondAuthenticateExternalUser(genericResponse),
-        (responseError: HttpErrorResponse) => this.handleAuthenticateExternalUserError(responseError));
+      if(this._isAdminLogin) {
+        this._userService.authenticateExternalAdmin(externalAuth).subscribe(
+          genericResponse => this.respondAuthenticateExternalUser(genericResponse),
+          (responseError: HttpErrorResponse) => this.handleAuthenticateExternalUserError(responseError));
+      }
+      else{
+        this._userService.authenticateExternalUser(externalAuth).subscribe(
+          genericResponse => this.respondAuthenticateExternalUser(genericResponse),
+          (responseError: HttpErrorResponse) => this.handleAuthenticateExternalUserError(responseError));
+      }
     });
   }
 

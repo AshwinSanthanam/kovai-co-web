@@ -1,20 +1,20 @@
 <div class="login-signup">
     <img class="login-signup__side-image" src="../../assets/images/login.jpg" alt="">
     <div class="login-signup__fields">
-        <div class="login">
+        <form [formGroup]="loginForm" (ngSubmit)="login()" class="login">
             <section class="login__fields">
                 <fieldset class="form-field">
                   <label class="form-field__label">Email ID</label>
-                  <input class="form-field__input" type="email">
+                  <input formControlName="email" class="form-field__input" type="email">
                 </fieldset>
                 <fieldset class="form-field">
                   <label class="form-field__label">Password</label>
-                  <input class="form-field__input" type="password">
+                  <input formControlName="password" class="form-field__input" type="password">
                   <span class="form-field__action">Show</span>
                 </fieldset>
             </section>
-            <a class="button button--thick button--block button--accent">LOGIN</a>
-        </div>
+            <button type="submit" class="button button--thick button--block button--accent">LOGIN</button>
+        </form>
         <div class="signup">
             <div class="signup__social">
                 <span class="light-text">OR Continue with</span>

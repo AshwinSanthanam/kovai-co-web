@@ -20,6 +20,7 @@
                 </fieldset>
             </section>
             <button type="submit" class="button button--thick button--block button--accent">LOGIN</button>
+            <p *ngIf="responseErrorMessage !== ''" class="error-message">{{responseErrorMessage}}</p>
         </form>
         <div class="signup">
             <div class="signup__social">

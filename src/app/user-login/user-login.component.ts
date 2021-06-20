@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticateUserRequest } from '../api/models/user.model';
@@ -12,9 +13,11 @@ export class UserLoginComponent implements OnInit {
 
   public loginForm: FormGroup;
   private _isPasswordVisible: boolean;
+  private _responseErrorMessage: string;
 
   constructor(private readonly _userService: UserService) {
     this._isPasswordVisible = false;
+    this._responseErrorMessage = '';
   }
 
   ngOnInit(): void {
@@ -28,7 +31,12 @@ export class UserLoginComponent implements OnInit {
     this.loginForm.markAllAsTouched();
     if(this.loginForm.valid) {
       this._userService.authenticateUser(this.loginForm.value).subscribe(genericResponse => {
+        this._responseErrorMessage = '';
         console.log(genericResponse);
+      }, (response: HttpErrorResponse) => {
+        if(response.status == 401) {
+          this._responseErrorMessage = response.error.message;
+        }
       });
     }
   }
@@ -44,5 +52,9 @@ export class UserLoginComponent implements OnInit {
 
   public get isPasswordVisible(): boolean {
     return this._isPasswordVisible;
+  }
+
+  public get responseErrorMessage(): string {
+    return this._responseErrorMessage;
   }
 }

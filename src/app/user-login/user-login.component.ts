@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticateUserRequest } from '../api/models/user.model';
 import { UserService } from '../api/user.service';
+import { JwtDecoderService } from '../helpers/jwt-decoder.service';
 import { StorageService } from '../helpers/storage.service';
 import { SpinnerService } from '../ui/spinner/spinner.service';
 
@@ -22,7 +22,8 @@ export class UserLoginComponent implements OnInit {
     private readonly _userService: UserService,
     private readonly _spinnerService: SpinnerService,
     private readonly _router: Router,
-    private readonly _storageService: StorageService) {
+    private readonly _storageService: StorageService,
+    private readonly _jwtDecoderService: JwtDecoderService) {
     this._isPasswordVisible = false;
     this._responseErrorMessage = '';
   }
@@ -41,6 +42,8 @@ export class UserLoginComponent implements OnInit {
       this._userService.authenticateUser(this.loginForm.value).subscribe(genericResponse => {
         this._responseErrorMessage = '';
         this._storageService.token = genericResponse.payload;
+        var decodedToken = this._jwtDecoderService.decode(this._storageService.token);
+        this._storageService.role = decodedToken.role;
         this._spinnerService.stopSpinner();
         this._router.navigate(['/product-browse']);
       }, (response: HttpErrorResponse) => {

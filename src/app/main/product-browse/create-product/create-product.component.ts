@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/api/models/product.model';
+import { ProductService } from 'src/app/api/product.service';
 import { Publisher } from 'src/app/helpers/publisher';
 
 @Component({
@@ -14,6 +16,7 @@ export class CreateProductComponent implements OnInit {
   imagePreviewUrl: string;
   productForm: FormGroup;
   productId: number;
+  public responseErrorMessage: string;
 
   @Input('edit-product-publisher')
   editProductPublisher: Publisher<Product>;
@@ -21,7 +24,7 @@ export class CreateProductComponent implements OnInit {
   @Output('get-product')
   productEmitter: EventEmitter<Product>;
 
-  constructor() {
+  constructor(private readonly _productService: ProductService) {
     this._noPreview = "/assets/images/app/no-preview.jpg";
     this.productEmitter = new EventEmitter<Product>();
     this.productId = 0;
@@ -67,8 +70,12 @@ export class CreateProductComponent implements OnInit {
         price: formValue.price,
         imageUrl: formValue.imageUrl
       };
-      this.productEmitter.emit(product);
-      this.productForm.reset();
+      this.productId = 0;
+      this._productService.createOrUpdateProduct(product).
+      subscribe(response => {
+        this.productEmitter.emit(product);
+        this.productForm.reset();
+      }, (errorResponse: HttpErrorResponse) => this.responseErrorMessage = errorResponse.error.message);
     }
   }
 

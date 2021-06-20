@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/api/models/product.model';
+import { ProductService } from 'src/app/api/product.service';
 import { Publisher } from 'src/app/helpers/publisher';
 
 @Component({
@@ -18,7 +19,9 @@ export class ProductBrowseComponent implements OnInit {
   editProductPublisher: Publisher<Product>;
   openCreateProductCommand: Publisher<boolean>;
 
-  constructor(private readonly _activatedRoute: ActivatedRoute) {
+  constructor(
+    private readonly _activatedRoute: ActivatedRoute,
+    private readonly _productService: ProductService) {
     this.numberOfSelectedTiles = 0;
     this.confirmDeleteCommand = new Publisher<boolean>();
     this.openCreateProductCommand = new Publisher<boolean>();
@@ -30,17 +33,20 @@ export class ProductBrowseComponent implements OnInit {
       this.adminMode = params['admin'] === 'admin';
     });
 
-    const products = [
-      { id: 1, name: 'sofa sets', price: 45000, imageUrl: 'https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg' },
-      { id: 2, name: 'beds', price: 12500, imageUrl: 'https://images.pexels.com/photos/1374125/pexels-photo-1374125.jpeg' },
-      { id: 3, name: 'chairs', price: 2400, imageUrl: 'https://images.pexels.com/photos/1233340/pexels-photo-1233340.jpeg' },
-      { id: 4, name: 'mattresses', price: 8600, imageUrl: 'https://images.pexels.com/photos/2374959/pexels-photo-2374959.jpeg' }
-    ];
-    this.productGrid = [];
+    this.getProducts();
+  }
 
-    for (const product of products) {
-      this.productGrid.push({ isSelected: false, product: product });
-    }
+  private getProducts() {
+    this._productService.getProducts(10, 0, '').subscribe(response => {
+      const products = response.payload;
+      this.productGrid = [];
+
+      for (const product of products) {
+        this.productGrid.push({ isSelected: false, product: product });
+      }
+
+      this.numberOfSelectedTiles = 0;
+    });
   }
 
   public onProductTileClick(i: number): void {
@@ -63,13 +69,11 @@ export class ProductBrowseComponent implements OnInit {
     this.confirmDeleteCommand.publish(false);
 
     if(this.adminMode) {
-      const newArray = [];
       for (const productTile of this.productGrid) {
-        if(!productTile.isSelected) {
-          newArray.push(productTile);
+        if(productTile.isSelected) {
+          this._productService.deleteProduct(productTile.product.id).subscribe(x => {});
         }
       }
-      this.productGrid = newArray;
       this.numberOfSelectedTiles = 0;
     }
   }
@@ -87,8 +91,8 @@ export class ProductBrowseComponent implements OnInit {
   }
 
   getCreatedOrEditedProduct(product: Product) {
-    console.log(product);
     this.openCreateProductCommand.publish(false);
+    this.getProducts();
   }
 
   openEditProduct() {

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
@@ -32,6 +33,7 @@ import { CheckoutComponent } from './main/checkout/checkout.component';
     ReactiveFormsModule,
     FormsModule,
     SocialLoginModule,
+    RouterModule,
     UiModule,
     ApiModule
   ],

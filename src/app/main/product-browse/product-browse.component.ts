@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CartService } from 'src/app/api/cart.service';
 import { Product } from 'src/app/api/models/product.model';
 import { ProductService } from 'src/app/api/product.service';
 import { GlobalService } from 'src/app/helpers/global.service';
@@ -28,7 +29,8 @@ export class ProductBrowseComponent implements OnInit {
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _productService: ProductService,
     private readonly _spinnerService: SpinnerService,
-    private readonly _globalService: GlobalService) {
+    private readonly _globalService: GlobalService,
+    private readonly _cartService: CartService) {
     this.numberOfSelectedTiles = 0;
     this.numberProductsSelected = 0;
     this.confirmDeleteCommand = new Publisher<boolean>();
@@ -105,9 +107,16 @@ export class ProductBrowseComponent implements OnInit {
     console.log(this.productGrid[i].isSelected);
     if(this.productGrid[i].isSelected) {
       this.numberProductsSelected++;
+      this._spinnerService.runSpinner();
+      this._cartService.addItemToCart({productId: this.productGrid[i].product.id}).subscribe(response => {
+        this._spinnerService.stopSpinner();
+      });
     }
     else{
       this.numberProductsSelected--;
+      this._cartService.deleteCartItem(this.productGrid[i].product.id).subscribe(response => {
+        this._spinnerService.stopSpinner();
+      });
     }
     this._globalService.cartItemCommand.publish(this.numberProductsSelected);
   }

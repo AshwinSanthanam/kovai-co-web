@@ -23,6 +23,15 @@ export class CartService {
     return this._httpClient.get<GenericResponse<Product[]>>(this._baseUrl, { headers: this.getHeader() });
   }
 
+  public addItemToCart(cartItem: { productId: number }): Observable<GenericResponse<null>> {
+    return this._httpClient.post<GenericResponse<null>>(this._baseUrl, cartItem, { headers: this.getHeader() });
+  }
+
+  public deleteCartItem(productId: number): Observable<GenericResponse<null>> {
+    const url = `${this._baseUrl}/product/${productId}`;
+    return this._httpClient.delete<GenericResponse<null>>(url, { headers: this.getHeader() });
+  }
+
   private getHeader() {
     return {
       'Authorization': `Bearer ${this._storageService.token}`

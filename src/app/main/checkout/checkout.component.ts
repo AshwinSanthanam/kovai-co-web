@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/api/cart.service';
+import { CompleteCart } from 'src/app/api/models/cart.model';
 import { Product } from 'src/app/api/models/product.model';
 import { ProductService } from 'src/app/api/product.service';
 import { SpinnerService } from 'src/app/ui/spinner/spinner.service';
@@ -11,8 +12,7 @@ import { SpinnerService } from 'src/app/ui/spinner/spinner.service';
 })
 export class CheckoutComponent implements OnInit {
 
-  products: Product[];
-  totalSum: number;
+  completeCart: CompleteCart;
 
   constructor(
     private readonly _cartService: CartService,
@@ -33,8 +33,7 @@ export class CheckoutComponent implements OnInit {
   private loadCart() {
     this._spinnerService.runSpinner();
     this._cartService.getCart().subscribe(response => {
-      this.products = response.payload;
-      this.totalSum = response.payload.map(x => x.price).reduce((a, b) => a + b, 0);
+      this.completeCart = response.payload;
       this._spinnerService.stopSpinner();
     });
   }

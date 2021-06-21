@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminUserAuthGuard } from './helpers/auth-guard/admin-user-auth.guard';
+import { CheckoutComponent } from './main/checkout/checkout.component';
 import { MainComponent } from './main/main.component';
 import { ProductBrowseComponent } from './main/product-browse/product-browse.component';
 import { SignupComponent } from './signup/signup.component';
@@ -16,7 +17,8 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       { path: 'product-browse', component: ProductBrowseComponent, canActivate: [AdminUserAuthGuard] },
-      { path: 'product-browse/:admin', component: ProductBrowseComponent }
+      { path: 'product-browse/:admin', component: ProductBrowseComponent },
+      { path: 'checkout', component: CheckoutComponent }
     ]
   }
 ];

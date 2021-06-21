@@ -14,6 +14,7 @@ import { MainComponent } from './main/main.component';
 import { ProductBrowseComponent } from './main/product-browse/product-browse.component';
 import { environment } from 'src/environments/environment';
 import { CreateProductComponent } from './main/product-browse/create-product/create-product.component';
+import { CheckoutComponent } from './main/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CreateProductComponent } from './main/product-browse/create-product/cre
     UserLoginComponent,
     MainComponent,
     ProductBrowseComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,

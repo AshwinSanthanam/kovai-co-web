@@ -6,14 +6,14 @@
             <img class="big-input__action" src="../../../assets/images/nav-bar/search.png" alt="">
         </div>
         <div class="nav__icons">
-            <section class="text-icon nav__icon">
+            <section class="text-icon nav__icon" (click)="logout()">
                 <img class="text-icon__icon" src="../../../assets/images/nav-bar/user.png" alt="">
-                <span class="text-icon__text">Profile</span>
+                <span class="text-icon__text">Logout</span>
             </section>
             <div class="badge-target">
                 <section class="text-icon nav__icon">
                     <img class="text-icon__icon" src="../../../assets/images/nav-bar/cart.png" alt="">
-                    <span class="text-icon__text">Cart</span>
+                    <a class="text-icon__text" routerLink="/checkout">Cart</a>
                 </section>
                 <span class="badge" [class.badge--text]="numberOfCartItems > 0" [class.badge--hidden]="numberOfCartItems == 0">{{numberOfCartItems}}</span>
             </div>

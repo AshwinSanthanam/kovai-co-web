@@ -15,6 +15,7 @@ export class NavBarComponent implements OnInit {
   numberOfCartItems: number;
 
   constructor(
+    private readonly _router: Router,
     private readonly _globalService: GlobalService,
     private readonly _storageService: StorageService,
     private readonly _jwtDecoderService: JwtDecoderService) {
@@ -24,6 +25,16 @@ export class NavBarComponent implements OnInit {
     this._globalService.cartItemCommand.subscribe(count => {
       this.numberOfCartItems = count;
     });
+  }
+
+  public logout() {
+    this._storageService.token = "";
+    if(this.isAdmin) {
+      this._router.navigate(['/signup/admin']);
+    }
+    else {
+      this._router.navigate(['/signup']);
+    }
   }
 
   get isAdmin(): boolean {

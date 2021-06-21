@@ -1,7 +1,7 @@
 <div class="center">
     <div class="checkout">
         <h2 class="checkout__title">CHECKOUT</h2>
-        <section class="checkout__cart">
+        <section class="checkout__cart" *ngIf="products.length > 0">
             <article class="cart-item" *ngFor="let product of products">
                 <img class="cart-item__image" [src]="product.imageUrl" alt="">
                 <div class="vertical-flex">
@@ -13,6 +13,7 @@
                 </div>
             </article>
         </section>
-        <span class="checkout__total">Total &#x20b9; {{totalSum}}</span>
+        <span *ngIf="products.length > 0" class="checkout__total">Total &#x20b9; {{totalSum}}</span>
     </div>
+    <h2 class="empty-cart" *ngIf="products.length == 0">Cart is Empty</h2>
 </div>

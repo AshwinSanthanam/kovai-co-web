@@ -48,7 +48,7 @@ export class ProductBrowseComponent implements OnInit {
 
   public getProducts() {
     this._spinnerService.runSpinner();
-    this._productService.getProducts(10, 0, this.searchString).subscribe(response => {
+    this._productService.getProducts(10000, 0, this.searchString).subscribe(response => {
       const products = response.payload;
       this.productGrid = [];
 

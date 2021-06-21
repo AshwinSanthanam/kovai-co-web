@@ -20,7 +20,7 @@
                 </fieldset>
             </section>
             <button type="submit" class="button button--thick button--block button--accent">REGISTER</button>
-            <p *ngIf="googleSignupErrorMessage !== ''" class="error-message">{{googleSignupErrorMessage}}</p>
+            <p *ngIf="responseErrorMessage !== ''" class="error-message">{{responseErrorMessage}}</p>
         </form>
         <div class="signup">
             <a (click)="gotoLogin()" class="button button--block">Existing User? Log In</a>
@@ -28,6 +28,7 @@
                 <span class="light-text">OR Continue with</span>
                 <img (click)="googleSignIn()" class="icon signup__social__icon" src="../../assets/svg/login-sprite/google.svg" alt="">
             </div>
+            <p *ngIf="googleSignupErrorMessage !== ''" class="error-message">{{googleSignupErrorMessage}}</p>
         </div>
     </div>
 </div>

@@ -50,6 +50,7 @@ export class SignupComponent implements OnInit {
   } 
 
   public register(): void {
+    this.googleSignupErrorMessage = '';
     this.loginForm.markAllAsTouched();
 
     if(this.loginForm.valid) {
@@ -110,6 +111,8 @@ export class SignupComponent implements OnInit {
   }
 
   public googleSignIn(): void {
+    this.loginForm.reset();
+    this._responseErrorMessage = '';
     this._authService.signInWithGoogle()
     .then(res => {
       const user: SocialUser = { ...res };

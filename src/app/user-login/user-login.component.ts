@@ -130,4 +130,13 @@ export class UserLoginComponent implements OnInit {
   public get googleSignupErrorMessage(): string {
     return this._googleSignupErrorMessage;
   }
+
+  public gotoSignUp(): void {
+    if(this._isAdminLogin) {
+      this._router.navigate(['/signup/admin']);
+    }
+    else {
+      this._router.navigate(['/signup']);
+    }
+  }
 }

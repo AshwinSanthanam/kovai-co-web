@@ -3,9 +3,9 @@
     <div class="product-browse product-browse--admin-mode">
         <div class="product__action-bar">
             <div>
-                <button *ngIf="adminMode" (click)="openCreateProduct()" class="button button--accent product__action-bar__button">NEW</button>
-                <button *ngIf="adminMode && numberOfSelectedTiles > 0" (click)="openDeletePopup()" class="button product__action-bar__button">DELETE</button>
+                <button *ngIf="adminMode && numberOfSelectedTiles == 0" (click)="openCreateProduct()" class="button button--accent product__action-bar__button">NEW</button>
                 <button *ngIf="adminMode && numberOfSelectedTiles === 1" (click)="openEditProduct()" class="button product__action-bar__button">EDIT</button>
+                <button *ngIf="adminMode && numberOfSelectedTiles > 0" (click)="openDeletePopup()" class="button product__action-bar__button">DELETE</button>
             </div>
             <div class="product__search big-input">
                 <input [(ngModel)]="searchString" placeholder="Search" class="big-input__input" type="text">

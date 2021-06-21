@@ -28,13 +28,13 @@ export class NavBarComponent implements OnInit {
   }
 
   public logout() {
-    this._storageService.token = "";
     if(this.isAdmin) {
       this._router.navigate(['/signup/admin']);
     }
     else {
       this._router.navigate(['/signup']);
     }
+    this._storageService.token = "";
   }
 
   get isAdmin(): boolean {

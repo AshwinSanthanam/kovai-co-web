@@ -8,7 +8,7 @@
                     <h3 class="cart-item__name">{{product.name}}</h3>
                     <p class="cart-item__price">&#x20b9; {{product.price}}</p>
                 </div>
-                <button class="cart-item__remove button button--accent">REMOVE</button>
+                <button (click)="deleteItem(product)" class="cart-item__remove button button--accent">REMOVE</button>
             </div>
         </article>
     </section>

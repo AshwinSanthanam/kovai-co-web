@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/api/cart.service';
 import { Product } from 'src/app/api/models/product.model';
 import { ProductService } from 'src/app/api/product.service';
+import { SpinnerService } from 'src/app/ui/spinner/spinner.service';
 
 @Component({
   selector: 'app-checkout',
@@ -14,12 +15,25 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private readonly _cartService: CartService,
-    private readonly _productService: ProductService) { }
+    private readonly _spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
-    this._cartService.getCart().subscribe(response => {
-      this.products = response.payload;
+    this.loadCart();
+  }
+
+  deleteItem(product: Product) {
+    this._spinnerService.runSpinner();
+    this._cartService.deleteCartItem(product.id).subscribe(response => {      
+      this._spinnerService.stopSpinner();
+      this.loadCart();
     });
   }
 
+  private loadCart() {
+    this._spinnerService.runSpinner();
+    this._cartService.getCart().subscribe(response => {
+      this.products = response.payload;
+      this._spinnerService.stopSpinner();
+    });
+  }
 }

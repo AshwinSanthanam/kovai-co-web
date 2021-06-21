@@ -1,5 +1,5 @@
 <div class="counter">
-    <span class="counter__control">+</span>
-    <span class="counter__value">0</span>
-    <span class="counter__control">-</span>
+    <span (click)="increment()" class="counter__control disable-select">+</span>
+    <span class="counter__value">{{count}}</span>
+    <span (click)="decrement()" class="counter__control disable-select">-</span>
 </div>

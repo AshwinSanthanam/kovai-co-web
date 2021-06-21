@@ -1,6 +1,8 @@
 .counter {
   border: 1px solid var(--color-accent);
   width: max-content;
+  border-radius: 5px;
+  overflow: hidden;
 
   & .counter__control,
   & .counter__value {

@@ -6,12 +6,11 @@
                 <img class="text-icon__icon" src="../../../assets/images/nav-bar/user.png" alt="">
                 <span class="text-icon__text">Logout</span>
             </section>
-            <a class="badge-target" routerLink="/checkout">
+            <a routerLink="/checkout">
                 <section class="text-icon nav__icon">
                     <img class="text-icon__icon" src="../../../assets/images/nav-bar/cart.png" alt="">
                     <span class="text-icon__text">Cart</span>
                 </section>
-                <span class="badge" [class.badge--text]="numberOfCartItems > 0" [class.badge--hidden]="numberOfCartItems == 0">{{numberOfCartItems}}</span>
             </a>
         </div>
     </nav>

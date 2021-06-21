@@ -1,0 +1,63 @@
+@import "../../../assets/styles/button.scss";
+
+.checkout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & &__title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    margin: 3rem 0 1rem 0;
+    color: var(--color-heading);
+  }
+
+  & .checkout__cart {
+    padding: 5rem 0;
+  }
+}
+
+.cart-item {
+  display: flex;
+  width: max-content;
+  padding: 2rem 5rem;
+  box-shadow: 0 0 10px lightgray;
+  border-radius: 5px;
+
+  & &__name {
+    font-size: 2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--color-heading);
+    margin: 0 0 0.5em 0;
+    align-self: center;
+  }
+
+  & &__image {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+    border-radius: 5px;
+    margin: 0 50em 0 0;
+  }
+
+  & &__price {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  & &__remove {
+    width: 10rem;
+  }
+}
+
+.vertical-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}

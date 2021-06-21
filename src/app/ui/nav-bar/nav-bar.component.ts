@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { GlobalService } from 'src/app/helpers/global.service';
+import { Publisher } from 'src/app/helpers/publisher';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
+  numberOfCartItems: number;
+
+  constructor(private readonly _globalService: GlobalService) {
+  }
 
   ngOnInit(): void {
+    this._globalService.cartItemCommand.subscribe(count => {
+      this.numberOfCartItems = count;
+    });
   }
 
 }

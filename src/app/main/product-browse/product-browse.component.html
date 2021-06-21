@@ -8,7 +8,7 @@
                 <button *ngIf="adminMode && numberOfSelectedTiles > 0" (click)="openDeletePopup()" class="button product__action-bar__button">DELETE</button>
             </div>
             <div class="product__search big-input">
-                <input [(ngModel)]="searchString" placeholder="Search" class="big-input__input" type="text">
+                <input (keyup.enter)="getProducts()" [(ngModel)]="searchString" placeholder="Search" class="big-input__input" type="text">
                 <img class="big-input__action" (click)="getProducts()" src="../../../assets/images/nav-bar/search.png" alt="">
             </div>
         </div>

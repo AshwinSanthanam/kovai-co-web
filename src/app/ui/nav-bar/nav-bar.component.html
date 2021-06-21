@@ -10,13 +10,13 @@
                 <img class="text-icon__icon" src="../../../assets/images/nav-bar/user.png" alt="">
                 <span class="text-icon__text">Logout</span>
             </section>
-            <div class="badge-target">
+            <a class="badge-target" routerLink="/checkout">
                 <section class="text-icon nav__icon">
                     <img class="text-icon__icon" src="../../../assets/images/nav-bar/cart.png" alt="">
-                    <a class="text-icon__text" routerLink="/checkout">Cart</a>
+                    <span class="text-icon__text">Cart</span>
                 </section>
                 <span class="badge" [class.badge--text]="numberOfCartItems > 0" [class.badge--hidden]="numberOfCartItems == 0">{{numberOfCartItems}}</span>
-            </div>
+            </a>
         </div>
     </nav>
 </div>

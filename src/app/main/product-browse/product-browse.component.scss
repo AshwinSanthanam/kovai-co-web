@@ -31,8 +31,8 @@
 
 .product-tile-container {
   display: grid;
-  grid-template-rows: 500px;
-  grid-template-columns: 370px 370px 370px;
+
+  grid-template-columns: repeat(3, 370px);
   align-items: center;
   justify-items: center;
   justify-content: center;

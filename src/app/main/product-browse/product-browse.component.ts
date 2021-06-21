@@ -126,4 +126,8 @@ export class ProductBrowseComponent implements OnInit {
     this.editProductPublisher.publish(productToEdit);
     this.openCreateProductCommand.publish(true);
   }
+
+  get gridTemplateRows(): string {
+    return `repeat(${Math.floor(this.productGrid.length / 3)}, 470px)`;
+  }
 }

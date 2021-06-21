@@ -12,7 +12,7 @@
                 <img class="big-input__action" (click)="getProducts()" src="../../../assets/images/nav-bar/search.png" alt="">
             </div>
         </div>
-        <div class="product-tile-container">
+        <div class="product-tile-container" [style.grid-template-rows]="gridTemplateRows">
             <div *ngFor="let productTile of productGrid; let i = index">
                 <div class="badge-target" (click)="onProductTileClick(i)">
                     <app-product-tile (add)="addToCart(i)" [image-url]="productTile.product.imageUrl" [admin-mode]="adminMode">

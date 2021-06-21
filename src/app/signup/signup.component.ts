@@ -20,12 +20,12 @@ export class SignupComponent implements OnInit {
 
   private _isPasswordVisible: boolean;
   private _responseErrorMessage: string;
-  private _googleSignupErrorMessage: string;
   private _isAdminLogin: boolean;
   
   private readonly _confirmSignup: Publisher<boolean>;
 
   public loginForm: FormGroup;
+  googleSignupErrorMessage: string;
 
   constructor(
     private readonly _userService: UserService,
@@ -133,14 +133,14 @@ export class SignupComponent implements OnInit {
   }
 
   private respondAuthenticateExternalUser(genericResponse: GenericResponse<string>): void {
-    this._googleSignupErrorMessage = '';
+    this.googleSignupErrorMessage = '';
     this._storageService.token = genericResponse.payload;
     this._router.navigate(['product-browse']);
     this._spinnerService.stopSpinner();
   }
 
   private handleAuthenticateExternalUserError(responseError: HttpErrorResponse): void {
-    this._googleSignupErrorMessage = responseError.error.message;
+    this.googleSignupErrorMessage = responseError.error.message;
     this._spinnerService.stopSpinner();
   }
 

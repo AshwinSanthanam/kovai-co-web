@@ -10,7 +10,7 @@
                         <p class="cart-item__quantity">Quantity: {{cartItem.quantity}}</p>
                         <p class="cart-item__price">&#x20b9; {{cartItem.product.price}}</p>
                     </div>
-                    <button (click)="deleteItem(product)" class="cart-item__remove button button--accent">REMOVE</button>
+                    <button (click)="deleteItem(cartItem)" class="cart-item__remove button button--accent">REMOVE</button>
                 </div>
             </article>
         </section>

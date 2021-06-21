@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/api/cart.service';
-import { CompleteCart } from 'src/app/api/models/cart.model';
+import { Cart, CartItem, CompleteCart } from 'src/app/api/models/cart.model';
 import { Product } from 'src/app/api/models/product.model';
 import { ProductService } from 'src/app/api/product.service';
 import { SpinnerService } from 'src/app/ui/spinner/spinner.service';
@@ -22,9 +22,13 @@ export class CheckoutComponent implements OnInit {
     this.loadCart();
   }
 
-  deleteItem(product: Product) {
+  deleteItem(cartItem: CartItem) {
     this._spinnerService.runSpinner();
-    this._cartService.deleteCartItem(product.id).subscribe(response => {      
+    const alterCart: Cart = {
+      productId: cartItem.product.id,
+      quantity: cartItem.quantity * -1
+    }
+    this._cartService.alterQuantity(alterCart).subscribe(response => {      
       this._spinnerService.stopSpinner();
       this.loadCart();
     });

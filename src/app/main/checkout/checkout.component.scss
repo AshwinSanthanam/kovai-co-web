@@ -1,10 +1,18 @@
 @import "../../../assets/styles/button.scss";
 
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .checkout {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: max-content;
 
   & &__title {
     text-align: center;
@@ -17,6 +25,13 @@
 
   & .checkout__cart {
     padding: 5rem 0;
+  }
+
+  & .checkout__total {
+    text-align: right;
+    font-size: 1.8rem;
+    font-weight: 600;
+    width: 100%;
   }
 }
 

@@ -12,6 +12,7 @@ import { SpinnerService } from 'src/app/ui/spinner/spinner.service';
 export class CheckoutComponent implements OnInit {
 
   products: Product[];
+  totalSum: number;
 
   constructor(
     private readonly _cartService: CartService,
@@ -33,6 +34,7 @@ export class CheckoutComponent implements OnInit {
     this._spinnerService.runSpinner();
     this._cartService.getCart().subscribe(response => {
       this.products = response.payload;
+      this.totalSum = response.payload.map(x => x.price).reduce((a, b) => a + b, 0);
       this._spinnerService.stopSpinner();
     });
   }

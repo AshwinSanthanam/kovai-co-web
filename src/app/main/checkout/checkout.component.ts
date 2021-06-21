@@ -16,7 +16,10 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private readonly _cartService: CartService,
-    private readonly _spinnerService: SpinnerService) { }
+    private readonly _spinnerService: SpinnerService) {
+      this.completeCart = new CompleteCart();
+      this.completeCart.cartItems = [];
+    }
 
   ngOnInit(): void {
     this.loadCart();
@@ -29,6 +32,19 @@ export class CheckoutComponent implements OnInit {
       quantity: cartItem.quantity * -1
     }
     this._cartService.alterQuantity(alterCart).subscribe(response => {      
+      this._spinnerService.stopSpinner();
+      this.loadCart();
+    });
+  }
+
+  alterQuantity(cartItem: CartItem, newQuantity) {
+    this._spinnerService.runSpinner();
+    const change = newQuantity - cartItem.quantity;
+    const cart: Cart = {
+      productId: cartItem.product.id,
+      quantity: change
+    };
+    this._cartService.alterQuantity(cart).subscribe(response => {
       this._spinnerService.stopSpinner();
       this.loadCart();
     });

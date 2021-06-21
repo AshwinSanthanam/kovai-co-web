@@ -46,6 +46,7 @@ export class UserLoginComponent implements OnInit {
   }
 
   public login(): void {
+    this._googleSignupErrorMessage = '';
     this.loginForm.markAllAsTouched();
     if(this.loginForm.valid) {
       this._spinnerService.runSpinner();
@@ -59,6 +60,7 @@ export class UserLoginComponent implements OnInit {
           genericResponse => this.onSuccess(genericResponse), 
           errorResponse => this.onError(errorResponse));
       }
+      this.loginForm.reset();
     }
   }
 
@@ -86,6 +88,8 @@ export class UserLoginComponent implements OnInit {
   }
 
   public googleSignIn(): void {
+    this.loginForm.reset();
+    this._responseErrorMessage = '';
     this._authService.signInWithGoogle()
     .then(res => {
       const user: SocialUser = { ...res };

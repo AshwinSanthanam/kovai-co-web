@@ -103,15 +103,14 @@ export class ProductBrowseComponent implements OnInit {
   }
 
   addToCart(i: number) {
-    this.productGrid[i].isSelected = !this.productGrid[i].isSelected;
-    console.log(this.productGrid[i].isSelected);
-    if(this.productGrid[i].isSelected) {
-      this.numberProductsSelected++;
-      this._spinnerService.runSpinner();
-      this._cartService.addItemToCart({productId: this.productGrid[i].product.id}).subscribe(response => {
-        this._spinnerService.stopSpinner();
-      });
-    }
+    this.numberProductsSelected++;
+    this._spinnerService.runSpinner();
+    const productId = this.productGrid[i].product.id;
+    const cart = {productId: productId, quantity: 1};
+    this._cartService.alterQuantity(cart).subscribe(response => {
+      this._spinnerService.stopSpinner();
+    });
+    
     this._globalService.cartItemCommand.publish(this.numberProductsSelected);
   }
 

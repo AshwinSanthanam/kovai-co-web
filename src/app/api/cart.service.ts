@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { StorageService } from '../helpers/storage.service';
+import { Cart } from './models/cart.model';
 import { GenericResponse } from './models/generic-response.model';
 import { Product } from './models/product.model';
 
@@ -23,8 +24,9 @@ export class CartService {
     return this._httpClient.get<GenericResponse<Product[]>>(this._baseUrl, { headers: this.getHeader() });
   }
 
-  public addItemToCart(cartItem: { productId: number }): Observable<GenericResponse<null>> {
-    return this._httpClient.post<GenericResponse<null>>(this._baseUrl, cartItem, { headers: this.getHeader() });
+  public alterQuantity(cart: Cart): Observable<GenericResponse<null>> {
+    const url = `${this._baseUrl}/change`;
+    return this._httpClient.post<GenericResponse<null>>(url, cart, { headers: this.getHeader() });
   }
 
   public deleteCartItem(productId: number): Observable<GenericResponse<null>> {

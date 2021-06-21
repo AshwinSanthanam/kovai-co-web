@@ -23,7 +23,8 @@
 
 <div class="center-sub-nav">
     <nav class="sub-nav">
-        <a class="nav-link" routerLinkActive="nav-link--active" routerLink="/product-browse">Products</a>
-        <a class="nav-link" routerLinkActive="nav-link--active" routerLink="/checkout">Checkout</a>
+        <a class="nav-link" routerLink="/product-browse">Products</a>
+        <a class="nav-link" *ngIf="isAdmin" routerLink="/product-browse/admin">Products Configuration</a>
+        <a class="nav-link" routerLink="/checkout">Checkout</a>
     </nav>
 </div>

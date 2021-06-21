@@ -58,7 +58,7 @@
       transition: transform 0.3s;
     }
 
-    &--active {
+    &:hover {
       position: relative;
       &::after {
         transform: scaleX(1);

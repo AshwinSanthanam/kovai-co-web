@@ -5,7 +5,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { ProductTileComponent } from './product-tile/product-tile.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { DialogComponent } from './dialog/dialog.component';
-import { QuantityComponent } from './quantity/quantity.component';
+import { CounterComponent } from './counter/counter.component';
 
 
 
@@ -15,7 +15,7 @@ import { QuantityComponent } from './quantity/quantity.component';
     ProductTileComponent,
     SpinnerComponent,
     DialogComponent,
-    QuantityComponent
+    CounterComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +26,7 @@ import { QuantityComponent } from './quantity/quantity.component';
     ProductTileComponent,
     SpinnerComponent,
     DialogComponent,
-    QuantityComponent
+    CounterComponent
   ]
 })
 export class UiModule { }

@@ -112,12 +112,6 @@ export class ProductBrowseComponent implements OnInit {
         this._spinnerService.stopSpinner();
       });
     }
-    else{
-      this.numberProductsSelected--;
-      this._cartService.deleteCartItem(this.productGrid[i].product.id).subscribe(response => {
-        this._spinnerService.stopSpinner();
-      });
-    }
     this._globalService.cartItemCommand.publish(this.numberProductsSelected);
   }
 
